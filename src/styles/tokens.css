@@ -1,0 +1,17 @@
+:root {
+  --bg: #EDEDED;
+  --dark: #1F1F1F;
+  --ink: #111111;
+  --on-dark: #EDEDED;
+  --line: rgba(17, 17, 17, 0.7);
+  --line-dark: rgba(237, 237, 237, 0.25);
+
+  --serif: 'Bodoni Moda', 'Georgia', serif;
+  --script: 'Pinyon Script', cursive;
+  --sans: 'Jost', 'Arial', sans-serif;
+  --jp: 'Noto Sans JP', sans-serif;
+  --text: 'Newsreader', 'Georgia', serif;
+
+  --nav-height: 0px;
+  --frame-inset: 20px;
+}

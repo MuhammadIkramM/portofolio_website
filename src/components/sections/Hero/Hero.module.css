@@ -1,0 +1,309 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+  z-index: auto;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.frame {
+  position: relative;
+  margin: 34px var(--frame-inset) 0;
+  border: 1px solid transparent;
+  min-height: calc(100vh - 55px);
+  padding: 24px 4% 35px;
+  overflow: hidden;
+  z-index: 30;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 3;
+}
+
+.textBlock {
+  opacity: 0;
+  color: #9e9e9e;
+  will-change: opacity, color;
+}
+
+.badge {
+  font: 500 9px / 1 var(--sans);
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+.jikoTitle {
+  font: 600 22px / 1.1 var(--serif);
+  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.jikoText {
+  font: 400 11px / 1.35 var(--text);
+  max-width: 220px;
+}
+
+.topRight {
+  text-align: right;
+  padding-right: 5%;
+}
+
+.date {
+  font: 400 22px / 1 var(--script);
+  display: block;
+}
+
+.credit {
+  font: 500 9px / 1 var(--sans);
+  letter-spacing: 0.12em;
+  display: block;
+  margin-top: 4px;
+}
+
+.drips {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.drip {
+  width: 1px;
+  background: var(--ink);
+  transform-origin: top;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+.jpHero {
+  position: absolute;
+  top: 130px;
+  left: 4%;
+  display: flex;
+  gap: 0.2em;
+  font: 500 clamp(22px, 3vw, 35px) / 1 var(--jp);
+  letter-spacing: 0.28em;
+  z-index: 3;
+}
+
+.jpChar {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.jpChar > span {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.nameRow {
+  position: absolute;
+  left: 3.5%;
+  right: 2%;
+  top: 31%;
+  display: flex;
+  justify-content: space-between;
+  font: 500 clamp(100px, 17.5vw, 230px) / 0.8 var(--serif);
+  letter-spacing: -0.07em;
+  z-index: 1;
+}
+
+.nameChar {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.nameChar > span {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.photo {
+  position: absolute;
+  z-index: 2;
+  left: 37%;
+  top: 5%;
+  height: 93%;
+  max-width: 38%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transform: scale(1.04);
+  will-change: opacity, transform;
+}
+
+.signature {
+  position: absolute;
+  z-index: 4;
+  right: 10%;
+  top: 53%;
+  font: 400 clamp(48px, 6vw, 72px) / 1 var(--script);
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 6%;
+  left: 4%;
+  right: 4%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.newsTitle {
+  font: 600 italic 20px / 1 var(--serif);
+  margin-bottom: 6px;
+}
+
+.newsText {
+  font: 400 12px / 1.4 var(--text);
+  max-width: 320px;
+  text-align: center;
+}
+
+.question {
+  text-align: center;
+  margin-right: 7%;
+}
+
+.question h3 {
+  font: 600 16px / 1.2 var(--serif);
+  margin-bottom: 4px;
+}
+
+.question p {
+  font: 500 12px / 1.3 var(--text);
+}
+
+.question small {
+  font: 400 10px / 1 var(--script);
+}
+
+.scrollLabel {
+  position: absolute;
+  right: 1%;
+  bottom: 30%;
+  font: 500 8px / 1 var(--sans);
+  letter-spacing: 0.3em;
+  writing-mode: vertical-rl;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.scrollLabel::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--ink);
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .frame {
+    margin: 20px 10px 0;
+    min-height: 780px;
+  }
+
+  .nameRow {
+    top: 32%;
+    font-size: 19vw;
+  }
+
+  .photo {
+    left: 30%;
+    max-width: 48%;
+    height: 74%;
+    top: 10%;
+  }
+
+  .signature {
+    top: 55%;
+    font-size: 48px;
+  }
+
+  .bottom {
+    bottom: 4%;
+    gap: 20px;
+  }
+
+  .newsTitle {
+    font-size: 16px;
+  }
+
+  .newsText,
+  .jikoText {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .frame {
+    min-height: 700px;
+  }
+
+  .jikoTitle {
+    font-size: 16px;
+  }
+
+  .jikoText {
+    font-size: 8px;
+  }
+
+  .date {
+    font-size: 16px;
+  }
+
+  .credit {
+    font-size: 7px;
+  }
+
+  .jpHero {
+    top: 120px;
+    font-size: 16px;
+  }
+
+  .nameRow {
+    top: 31%;
+    font-size: 22vw;
+  }
+
+  .photo {
+    left: 23%;
+    max-width: 58%;
+    height: 65%;
+  }
+
+  .signature {
+    right: 4%;
+    top: 56%;
+    font-size: 36px;
+  }
+
+  .bottom {
+    flex-direction: column;
+    bottom: 16px;
+  }
+
+  .question {
+    text-align: left;
+    margin: 20px 0 0;
+  }
+}

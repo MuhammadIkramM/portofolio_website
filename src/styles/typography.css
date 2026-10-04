@@ -1,0 +1,46 @@
+.display-xl {
+  font: 500 clamp(120px, 18vw, 230px) / 0.8 var(--serif);
+  letter-spacing: -0.07em;
+}
+
+.display-lg {
+  font: 500 clamp(70px, 9vw, 130px) / 0.75 var(--serif);
+  letter-spacing: -0.05em;
+}
+
+.display-md {
+  font: italic clamp(50px, 5vw, 56px) / 0.85 var(--serif);
+}
+
+.script-lg {
+  font: 400 clamp(60px, 7vw, 90px) / 1 var(--script);
+}
+
+.script-md {
+  font: 400 clamp(40px, 4vw, 72px) / 1 var(--script);
+}
+
+.script-sm {
+  font: 400 clamp(20px, 2.5vw, 30px) / 1 var(--script);
+}
+
+.sans-label {
+  font: 500 clamp(8px, 0.9vw, 11px) / 1.3 var(--sans);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.jp-text {
+  font-family: var(--jp);
+}
+
+.section-kicker {
+  font: 500 9px / 1 var(--sans);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 26px;
+}
+
+.section-kicker span {
+  margin-right: 14px;
+}

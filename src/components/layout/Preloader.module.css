@@ -1,0 +1,98 @@
+.preloaderDark {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.jpText {
+  display: flex;
+  gap: 0.8em;
+  font: 500 clamp(36px, 5vw, 50px) / 1 var(--jp);
+  color: var(--on-dark);
+  letter-spacing: 0.28em;
+}
+
+.char {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.char > span {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.progressWrap {
+  width: clamp(140px, 18vw, 190px);
+}
+
+.progressTrack {
+  width: 100%;
+  height: 1px;
+  background: rgba(237, 237, 237, 0.25);
+  position: relative;
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0;
+  background: var(--on-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font: 500 8px / 1 var(--sans);
+  letter-spacing: 0.2em;
+  color: var(--on-dark);
+}
+
+.name {
+  text-transform: uppercase;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.wipeCol {
+  position: fixed;
+  top: 0;
+  width: 20%;
+  height: 100vh;
+  z-index: 20;
+  background: #EDEDED;
+  transform: translateY(100%);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.wipeCol:nth-child(1) { left: 0%; }
+.wipeCol:nth-child(2) { left: 20%; }
+.wipeCol:nth-child(3) { left: 40%; }
+.wipeCol:nth-child(4) { left: 60%; }
+.wipeCol:nth-child(5) { left: 80%; }
