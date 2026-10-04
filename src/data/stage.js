@@ -17,7 +17,6 @@ export const STAGE_ITEMS = [
     num: '02',
     title: 'Cybersecurity',
     desc: 'Mengamankan sistem dan infrastruktur dari ancaman siber.',
-    thumb: '/assets/stage/media.jpg',
     accent: 'sec',
   },
   {

@@ -4,6 +4,7 @@ import { gsap } from '@/lib/gsap';
  * Reveal all Hero elements immediately (used for ?skip query).
  */
 export function revealHeroImmediately(heroRefs) {
+  window.dispatchEvent(new CustomEvent('intro:reveal', { detail: { immediate: true } }));
   if (!heroRefs) return;
 
   if (heroRefs.photo) {
@@ -21,11 +22,15 @@ export function revealHeroImmediately(heroRefs) {
   if (heroRefs.textBlocks && heroRefs.textBlocks.length > 0) {
     gsap.set(heroRefs.textBlocks, { opacity: 1 });
   }
+  if (heroRefs.socials && heroRefs.socials.length > 0) {
+    gsap.set(heroRefs.socials, { opacity: 1, y: 0 });
+  }
   if (heroRefs.dripLines && heroRefs.dripLines.length > 0) {
     gsap.set(heroRefs.dripLines, { scaleY: 1 });
   }
   if (heroRefs.frame) {
     gsap.set(heroRefs.frame, { borderColor: 'var(--line)' });
+    heroRefs.frame.classList.add('intro-complete');
   }
   if (heroRefs.signature) {
     gsap.set(heroRefs.signature, { clipPath: 'inset(0 0% 0 0)' });
@@ -189,6 +194,16 @@ function createHeroIntroSubTimeline(hero) {
     );
   }
 
+  // 4b. Social icon row (fade + y, stagger 0.06, starts at 0.60s)
+  if (hero.socials && hero.socials.length > 0) {
+    tl.fromTo(
+      hero.socials,
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out' },
+      0.6
+    );
+  }
+
   // 5. Border frame + drip lines grow downward (starts at 0.90s)
   if (hero.dripLines && hero.dripLines.length > 0) {
     tl.fromTo(
@@ -266,6 +281,7 @@ export function createMasterIntroTimeline(elements, options = {}) {
       if (hero?.frame) {
         gsap.set(hero.frame, { clearProps: 'zIndex' });
         hero.frame.style.zIndex = 'auto';
+        hero.frame.classList.add('intro-complete');
       }
 
       // Keep body background transparent
@@ -293,6 +309,10 @@ export function createMasterIntroTimeline(elements, options = {}) {
   masterTl.add(wipeTl, 'wipe-start');
 
   // Hero intro starts at 3.27s (approx 0.1s after wipe phase 2 starts at 3.17s)
+  masterTl.add(() => {
+    window.dispatchEvent(new CustomEvent('intro:reveal'));
+  }, 3.17);
+
   masterTl.addLabel('hero-start', 3.27);
   masterTl.add(heroIntroTl, 'hero-start');
 
@@ -316,6 +336,7 @@ export function initMasterIntro(elements, options = {}) {
 
   // Skip option
   if (isSkip) {
+    window.dispatchEvent(new CustomEvent('intro:reveal', { detail: { immediate: true } }));
     revealHeroImmediately(elements.hero);
     if (elements.preloader?.container) {
       elements.preloader.container.style.display = 'none';

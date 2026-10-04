@@ -1,16 +1,13 @@
-export const SOCIALS = [
-  { name: 'Instagram', url: '#' },
-  { name: 'GitHub', url: '#' },
-  { name: 'LinkedIn', url: '#' },
-  { name: 'X / Twitter', url: '#' },
-];
+import { SOCIALS } from './socials';
+
+export { SOCIALS };
 
 export const FOOTER = {
-  kicker: 'KONTAK',
+  kicker: 'CONTACT',
   kickerNum: '05',
-  heading: 'Terima kasih sudah',
-  headingScript: 'mampir!',
+  heading: 'Thanks for',
+  headingAccent: 'stopping by!',
   credit: 'MUHAMMAD IKRAM MUSLIMIN',
-  backToTop: 'KEMBALI KE ATAS',
+  backToTop: 'BACK TO TOP',
   giant: 'IKRAM',
 };

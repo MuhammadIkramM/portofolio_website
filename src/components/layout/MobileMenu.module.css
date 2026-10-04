@@ -1,0 +1,121 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  z-index: 40;
+  background: var(--glass-bg-solid);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  padding-top: var(--nav-h);
+  padding-inline: var(--gutter);
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay.open {
+  pointer-events: auto;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.linkItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color 0.2s;
+  padding: 8px 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.linkItem:active {
+  opacity: 0.7;
+  transition: opacity 0.08s;
+}
+
+.linkItemActive {
+  color: var(--text);
+}
+
+.linkItemActive .linkNum {
+  color: var(--eng);
+}
+
+.linkNum {
+  font: 600 12px / 1 var(--sans);
+  letter-spacing: 0.2em;
+  color: var(--text-3);
+  min-width: 32px;
+  flex-shrink: 0;
+}
+
+.linkLabel {
+  font: 500 clamp(40px, 11vw, 56px) / 1 var(--serif);
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.socialRow {
+  display: flex;
+  gap: 12px;
+}
+
+.cvButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  font: 500 14px / 1 var(--font-body);
+  letter-spacing: 0.05em;
+  background: transparent;
+  text-decoration: none;
+  min-height: 44px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.cvButton:active {
+  background: var(--paper);
+  color: var(--paper-ink);
+  border-color: var(--paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cvButton:hover {
+    background: var(--paper);
+    color: var(--paper-ink);
+    border-color: var(--paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .linkItem,
+  .cvButton {
+    transition: none;
+  }
+}

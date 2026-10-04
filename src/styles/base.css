@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500;1,6..96,700&family=Mr+Dafoe&family=Jost:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500;1,6..96,700&family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+/*
+ * Breakpoints (max-width):
+ * - 1279px: Desktop / Large Tablet boundary
+ * - 1023px: Tablet landscape
+ * -  899px: Tablet portrait / Navbar switches to mobile menu
+ * -  767px: Phablet / Mobile portrait / Hero percentage layout
+ * -  639px: Large phone / Project modal bottom sheet
+ * -  479px: Standard phone
+ * -  359px: Small phone
+ */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -13,17 +24,36 @@ html {
   background: var(--dark);
 }
 
+html, body {
+  overflow-x: clip;
+}
+
 body {
   background: transparent;
   color: var(--text);
   font-family: var(--font-body);
-  overflow-x: hidden;
   cursor: default;
 }
 
-#root,
+#root {
+  background: transparent;
+  overflow-x: clip;
+}
+
 main {
   background: transparent;
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+}
+
+/* Children of flex and grid get min-width: 0 to prevent overflow */
+:where(main, section, div, form, nav, ul, ol, header, footer) > * {
+  min-width: 0;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-h);
 }
 
 ::selection {
@@ -36,16 +66,10 @@ main {
   outline-offset: 3px;
 }
 
-[data-paper] :focus-visible,
-[data-paper]:focus-visible,
-.nav--on-paper :focus-visible {
-  outline: 2px solid var(--eng-on-light);
-  outline-offset: 3px;
-}
-
 img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -63,28 +87,4 @@ button {
 
 ul, ol {
   list-style: none;
-}
-
-.section--deep {
-  position: relative;
-  isolation: isolate;
-  background: transparent;
-  --f: min(var(--feather), 45%);
-}
-
-.section--deep::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(180deg,
-    rgba(var(--overlay-rgb), 0) 0,
-    rgba(var(--overlay-rgb), calc(var(--overlay-a) * .15)) calc(var(--f) * .35),
-    rgba(var(--overlay-rgb), calc(var(--overlay-a) * .55)) calc(var(--f) * .70),
-    rgba(var(--overlay-rgb), var(--overlay-a)) var(--f),
-    rgba(var(--overlay-rgb), var(--overlay-a)) calc(100% - var(--f)),
-    rgba(var(--overlay-rgb), calc(var(--overlay-a) * .55)) calc(100% - var(--f) * .70),
-    rgba(var(--overlay-rgb), calc(var(--overlay-a) * .15)) calc(100% - var(--f) * .35),
-    rgba(var(--overlay-rgb), 0) 100%);
 }

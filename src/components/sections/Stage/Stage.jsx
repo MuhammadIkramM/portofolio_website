@@ -54,7 +54,6 @@ export function Stage() {
             onMouseEnter={() => setHoveredIdx(i)}
             onMouseLeave={() => setHoveredIdx(-1)}
             onMouseMove={handleMouseMove}
-            data-cursor
           >
             <span className={styles.num}>({item.num})</span>
             <h3 className={styles.title}>{item.title}</h3>
@@ -68,8 +67,11 @@ export function Stage() {
         ref={thumbRef}
         className={styles.thumb}
         style={{
-          opacity: hoveredIdx >= 0 ? 1 : 0,
-          backgroundImage: hoveredIdx >= 0 ? `url(${STAGE_ITEMS[hoveredIdx]?.thumb})` : 'none',
+          opacity: hoveredIdx >= 0 && STAGE_ITEMS[hoveredIdx]?.thumb ? 1 : 0,
+          backgroundImage:
+            hoveredIdx >= 0 && STAGE_ITEMS[hoveredIdx]?.thumb
+              ? `url(${STAGE_ITEMS[hoveredIdx].thumb})`
+              : 'none',
         }}
       />
     </section>

@@ -3,26 +3,22 @@ export const PROFILE = {
   firstName: 'Muhammad',
   lastName: 'Muslimin',
   fullName: 'Muhammad Ikram Muslimin',
-  alias: 'Zandik',
-  nameJp: 'イクラム',
   city: null,
-  quote: 'Bangun yang berguna, amankan yang penting.',
   signatureImage: null,
 
-  greeting: 'Halo, aku',
-  nameScript: 'Ikram!',
-  bio: 'Software developer dan pegiat cybersecurity. Aku membangun aplikasi web yang rapi dan cepat, dengan keamanan sebagai bagian dari rancangan, bukan tambalan di akhir.',
+  greeting: 'Hello, I am',
+  nameLabel: 'Ikram',
+  bio: 'Software developer and cybersecurity practitioner. I build clean, fast web applications with security designed in from the start, not patched on at the end.',
   photo: '/assets/profile/profile.jpg',
-  photoCaption: { left: 'NO. 001 · PORTRAIT', right: 'IKRAM' },
+  photoCaption: 'Ikram',
   facts: [
-    { label: 'NAMA', value: 'Muhammad Ikram Muslimin' },
-    { label: 'ALIAS', value: 'Zandik' },
-    { label: 'PERAN', value: 'Software Developer' },
-    { label: 'FOKUS', value: 'Cybersecurity' },
+    { label: 'NAME', value: 'Muhammad Ikram Muslimin' },
+    { label: 'ALIAS', value: 'Ikram' },
+    { label: 'GPA', value: '3.78 / 4.00' },
+    { label: 'FOCUS', value: 'Software Developer | Cybersecurity' },
   ],
   intro: {
-    label: 'PERKENALAN 自己紹介',
-    text: 'Bangun yang berguna, amankan yang penting.',
+    label: 'INTRODUCTION',
   },
 };
 
@@ -31,28 +27,14 @@ export const HERO = {
   topLabel: 'Muhammad',
   signature: 'Muslimin',
   photo: '/assets/hero/hero-cutout.png',
-  leftTop: {
-    quote: 'Bangun yang berguna, amankan yang penting.',
-  },
   softwareDev: {
     title: 'Software Developer',
-    text: 'Membangun aplikasi web yang rapi, cepat, dan mudah dirawat.',
   },
   cybersecurity: {
     title: 'Cybersecurity',
-    text: 'Keamanan dirancang sejak awal, bukan ditambal di akhir.',
-    attribution: '~Ikram~',
   },
 };
 
 export const MARQUEE_DATA = {
-  name: 'Ikram',
-  nameJp: 'イクラム',
-  alias: 'Zandik',
-};
-
-export const QUOTE_DATA = {
-  label: '03  QUOTE',
-  words: 'Bangun yang berguna, amankan yang penting.'.split(' '),
-  attribution: '~Ikram~',
+  items: ['Ikram', 'Software Developer', 'Cybersecurity', 'Muhammad Ikram Muslimin'],
 };

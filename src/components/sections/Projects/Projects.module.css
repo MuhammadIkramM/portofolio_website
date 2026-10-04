@@ -1,0 +1,152 @@
+.projects {
+  padding: clamp(64px, 12vw, 130px) 6vw clamp(48px, 8vw, 80px);
+  position: relative;
+  background: transparent;
+  color: var(--text);
+}
+
+
+
+/* 3-col >= 1024px */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  height: 100%;
+  min-height: 44px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover,
+  .card:focus-visible {
+    transform: translateY(-4px);
+  }
+
+  .cardOdd:hover,
+  .cardOdd:focus-visible {
+    border-color: var(--eng);
+  }
+
+  .cardEven:hover,
+  .cardEven:focus-visible {
+    border-color: var(--sec);
+  }
+}
+
+.card:active {
+  transform: translateY(-2px);
+  transition-duration: 0.08s;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.index {
+  font: 600 11px / 1 var(--font-sans);
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+.meta {
+  font: 500 11px / 1 var(--font-sans);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardTitle {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.cardSubtitle {
+  font: 400 14px / 1.4 var(--font-body);
+  color: var(--text-2);
+  margin: 0 0 14px;
+}
+
+.cardSummary {
+  font: 400 13px / 1.5 var(--font-body);
+  color: var(--text-3);
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+
+.stackRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: auto;
+}
+
+.chip {
+  font: 500 11px / 1 var(--font-sans);
+  color: var(--text-2);
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chipMore {
+  font: 500 11px / 1 var(--font-sans);
+  color: var(--text-3);
+  padding: 4px 6px;
+}
+
+/* 2-col at 640-1023px */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+
+/* 1-col at <= 639px */
+@media (max-width: 639px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .cardHeader {
+    flex-wrap: wrap;
+  }
+}
+
+/* <= 479px: meta drops under index */
+@media (max-width: 479px) {
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

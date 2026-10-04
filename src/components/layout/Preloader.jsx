@@ -1,5 +1,4 @@
 import { createPortal } from 'react-dom';
-import { Signature } from '@/components/ui/Signature';
 import styles from './Preloader.module.css';
 
 export function Preloader() {
@@ -8,15 +7,15 @@ export function Preloader() {
       {/* Layer 2: Preloader Dark (z-index 10) */}
       <div data-preloader-dark className={styles.preloaderDark}>
         <div data-preloader-inner className={styles.inner}>
-          <div data-preloader-signature className={styles.signatureWrap}>
-            <Signature className={styles.signatureText} />
+          <div data-preloader-signature className={styles.titleWrap}>
+            <h1 className={styles.title}>IKRAM</h1>
           </div>
           <div className={styles.progressWrap}>
             <div className={styles.progressTrack}>
               <div data-preloader-progress className={styles.progressFill} />
             </div>
             <div className={styles.progressMeta}>
-              <span className={styles.name}>IKRAM</span>
+              <span className={styles.name}>Loading...</span>
               <span data-preloader-counter className={styles.counter}>000</span>
             </div>
           </div>

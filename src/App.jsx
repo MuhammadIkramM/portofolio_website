@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import { ScrollTrigger } from '@/lib/gsap';
 import { useLenis } from '@/hooks/useLenis';
-import { useCursor } from '@/hooks/useCursor';
 import { Navbar } from '@/components/layout/Navbar';
-import { Cursor } from '@/components/layout/Cursor';
 import { Preloader } from '@/components/layout/Preloader';
 import { BackgroundLayer } from '@/components/layout/BackgroundLayer';
 import { Hero } from '@/components/sections/Hero/Hero';
 import { Marquee } from '@/components/sections/Marquee/Marquee';
-import { About } from '@/components/sections/About/About';
-import { Stage } from '@/components/sections/Stage/Stage';
-import { Quote } from '@/components/sections/Quote/Quote';
-import { Gallery } from '@/components/sections/Gallery/Gallery';
+import { Profile } from '@/components/sections/Profile/Profile';
+import { Experience } from '@/components/sections/Experience/Experience';
+import { Projects } from '@/components/sections/Projects/Projects';
+import { TechStack } from '@/components/sections/TechStack/TechStack';
 import { Contact } from '@/components/sections/Contact/Contact';
 import { initMasterIntro } from '@/animations/intro';
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false);
   useLenis();
-  const cursorRef = useCursor();
 
   useEffect(() => {
     // Lock page scroll during intro
@@ -40,6 +38,7 @@ export default function App() {
     const heroNameChars = Array.from(document.querySelectorAll('[data-hero-name-char] > span'));
     const heroTopChars = Array.from(document.querySelectorAll('[data-hero-top-char] > span, [data-hero-jp-char] > span'));
     const heroTextBlocks = Array.from(document.querySelectorAll('[data-hero-text]'));
+    const heroSocials = Array.from(document.querySelectorAll('[data-hero-social]'));
     const heroDripLines = Array.from(document.querySelectorAll('[data-hero-drip]'));
     const heroFrame = document.querySelector('[data-hero-frame]');
     const heroSignature = document.querySelector('[data-hero-signature]');
@@ -64,6 +63,7 @@ export default function App() {
         topLabelChars: heroTopChars,
         jpChars: heroTopChars,
         textBlocks: heroTextBlocks,
+        socials: heroSocials,
         dripLines: heroDripLines,
         frame: heroFrame,
         signature: heroSignature,
@@ -82,10 +82,21 @@ export default function App() {
       });
     });
 
+    // Debounced ScrollTrigger.refresh on resize / orientation change
+    let rafId;
+    const refreshST = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+    window.addEventListener('resize', refreshST, { passive: true });
+    window.addEventListener('orientationchange', refreshST, { passive: true });
+
     return () => {
       document.body.style.overflow = '';
       window.__lenis?.start();
       ctx.revert();
+      window.removeEventListener('resize', refreshST);
+      window.removeEventListener('orientationchange', refreshST);
     };
   }, []);
 
@@ -93,15 +104,14 @@ export default function App() {
     <>
       <BackgroundLayer />
       {!introDone && <Preloader />}
-      <Cursor ref={cursorRef} />
       <Navbar />
       <main>
         <Hero />
         <Marquee />
-        <About />
-        <Stage />
-        <Quote />
-        <Gallery />
+        <Profile />
+        <Experience />
+        <Projects />
+        <TechStack />
         <Contact />
       </main>
     </>

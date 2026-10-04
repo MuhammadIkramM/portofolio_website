@@ -5,7 +5,7 @@ export function Signature({ className = '', style = {} }) {
     return (
       <img
         src={PROFILE.signatureImage}
-        alt={PROFILE.alias}
+        alt={PROFILE.name}
         className={className}
         style={{ display: 'inline-block', height: '1em', ...style }}
       />
@@ -16,13 +16,15 @@ export function Signature({ className = '', style = {} }) {
     <span
       className={className}
       style={{
-        fontFamily: 'var(--signature)',
-        fontWeight: 400,
+        fontFamily: 'var(--font-sans)',
+        fontWeight: 500,
         fontStyle: 'normal',
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
         ...style,
       }}
     >
-      {PROFILE.alias}
+      {PROFILE.name}
     </span>
   );
 }

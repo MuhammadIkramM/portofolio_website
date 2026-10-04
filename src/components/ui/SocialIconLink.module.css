@@ -1,0 +1,29 @@
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: transparent;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .iconLink:hover,
+  .iconLink:focus-visible {
+    background: var(--paper);
+    color: var(--paper-ink);
+    border-color: var(--paper);
+  }
+}
+
+.iconLink:active {
+  background: var(--paper);
+  color: var(--paper-ink);
+  border-color: var(--paper);
+  transition-duration: 0.08s;
+}

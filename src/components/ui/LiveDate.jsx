@@ -1,12 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { PROFILE } from '@/data/profile';
 
+const dtf = new Intl.DateTimeFormat('en-GB', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+});
+
 function formatDate(date) {
-  const dd = String(date.getDate()).padStart(2, '0');
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const yyyy = date.getFullYear();
-  const prefix = PROFILE.city ? `${PROFILE.city},` : '';
-  return `${prefix}${dd}-${mm}-${yyyy}`;
+  const formatted = dtf.format(date);
+  const prefix = PROFILE.city ? `${PROFILE.city}, ` : '';
+  return `${prefix}${formatted}`;
 }
 
 export function LiveDate({ className = '', style = {} }) {
@@ -29,8 +33,10 @@ export function LiveDate({ className = '', style = {} }) {
     <span
       className={className}
       style={{
-        fontFamily: 'var(--script)',
+        fontFamily: 'var(--font-sans)',
+        fontVariantNumeric: 'tabular-nums',
         fontWeight: 400,
+        fontStyle: 'normal',
         ...style,
       }}
     >

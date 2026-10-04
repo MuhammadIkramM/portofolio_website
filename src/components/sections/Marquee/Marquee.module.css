@@ -1,3 +1,9 @@
+.marqueeOuter {
+  overflow-x: clip;
+  /* Extra vertical room so rotated corners don't clip */
+  padding-block: 12px;
+}
+
 .band {
   background: var(--paper);
   color: var(--paper-ink);
@@ -27,24 +33,14 @@
 .segment {
   display: inline-flex;
   align-items: center;
-  font: italic clamp(26px, 3.8vw, 38px) / 1 var(--serif);
+  font: italic clamp(22px, 4.5vw, 38px) / 1 var(--serif);
   font-optical-sizing: none;
   font-variation-settings: "opsz" 18;
 }
 
-.jp {
-  font-family: var(--jp);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.9em;
-}
-
-.signature {
-  font-family: var(--signature);
-  font-style: normal;
-  font-size: 1.15em;
-  margin-top: 2px;
-  color: var(--paper-ink);
+.itemWrapper {
+  display: inline-flex;
+  align-items: center;
 }
 
 .sepEng {

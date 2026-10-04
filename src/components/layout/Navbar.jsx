@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from '@/lib/gsap';
 import { NAV_ITEMS } from '@/data/nav';
 import { PROFILE } from '@/data/profile';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
+import { MobileMenu } from './MobileMenu';
 import styles from './Navbar.module.css';
 
 const SECTION_IDS = NAV_ITEMS.map((n) => n.href.replace('#', ''));
@@ -12,7 +13,7 @@ export function Navbar() {
   const navRef = useRef(null);
   const active = useScrollSpy(SECTION_IDS);
   const [visible, setVisible] = useState(false);
-  const [onPaper, setOnPaper] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useGSAP(() => {
     ScrollTrigger.create({
@@ -21,61 +22,6 @@ export function Navbar() {
       onEnter: () => setVisible(true),
       onLeaveBack: () => setVisible(false),
     });
-
-    const activePaperOverlaps = new Set();
-    const updatePaperState = (id, isActive) => {
-      if (isActive) {
-        activePaperOverlaps.add(id);
-      } else {
-        activePaperOverlaps.delete(id);
-      }
-      setOnPaper(activePaperOverlaps.size > 0);
-    };
-
-    // Marquee band trigger: direct element trigger
-    const marqueeEl = document.querySelector('[data-marquee-band]');
-    if (marqueeEl) {
-      ScrollTrigger.create({
-        trigger: marqueeEl,
-        start: 'top top+=56px',
-        end: 'bottom top',
-        onEnter: () => updatePaperState('marquee', true),
-        onLeave: () => updatePaperState('marquee', false),
-        onEnterBack: () => updatePaperState('marquee', true),
-        onLeaveBack: () => updatePaperState('marquee', false),
-      });
-    }
-
-    // Gallery break card trigger: direct element trigger with containerAnimation for horizontal scroll
-    const setupBreakCardTrigger = (galleryTween) => {
-      const breakCardEl = document.querySelector('[data-break-card]');
-      if (!breakCardEl) return null;
-      const config = {
-        trigger: breakCardEl,
-        start: 'top top+=56px',
-        end: 'bottom top',
-        onEnter: () => updatePaperState('breakCard', true),
-        onLeave: () => updatePaperState('breakCard', false),
-        onEnterBack: () => updatePaperState('breakCard', true),
-        onLeaveBack: () => updatePaperState('breakCard', false),
-      };
-      if (galleryTween) {
-        config.containerAnimation = galleryTween;
-      }
-      return ScrollTrigger.create(config);
-    };
-
-    let breakCardST = setupBreakCardTrigger(window.__galleryTween);
-
-    const onGalleryReady = (e) => {
-      if (breakCardST) breakCardST.kill();
-      breakCardST = setupBreakCardTrigger(e.detail?.tween || window.__galleryTween);
-    };
-    window.addEventListener('gallery-scroll-ready', onGalleryReady, { once: true });
-
-    return () => {
-      window.removeEventListener('gallery-scroll-ready', onGalleryReady);
-    };
   }, { scope: navRef });
 
   const handleClick = (e, href) => {
@@ -98,34 +44,60 @@ export function Navbar() {
     }
   };
 
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
+
   return (
-    <header
-      ref={navRef}
-      className={`${styles.nav} ${visible ? styles.visible : ''} ${onPaper ? `${styles.navOnPaper} nav--on-paper` : ''}`}
-      role="navigation"
-    >
-      <a
-        className={styles.brand}
-        href="#top"
-        onClick={(e) => handleClick(e, '#top')}
-        data-cursor
+    <>
+      <header
+        ref={navRef}
+        className={`${styles.nav} ${visible ? styles.visible : ''}`}
+        role="navigation"
       >
-        {PROFILE.name} <span className={styles.brandScript}>Z.</span>
-      </a>
-      <nav className={styles.links}>
-        {NAV_ITEMS.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className={`${styles.link} ${active === item.href.replace('#', '') ? styles.active : ''}`}
-            onClick={(e) => handleClick(e, item.href)}
-            data-cursor
-          >
-            <sup className={styles.num}>{item.num}</sup>
-            {item.label}
-          </a>
-        ))}
-      </nav>
-    </header>
+        <a
+          className={styles.brand}
+          href="#top"
+          onClick={(e) => handleClick(e, '#top')}
+        >
+          {PROFILE.name}<span className={styles.brandZ}>Z.</span>
+        </a>
+
+        {/* Desktop links (>= 900px) */}
+        <nav className={styles.links}>
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className={`${styles.link} ${active === item.href.replace('#', '') ? styles.active : ''}`}
+              onClick={(e) => handleClick(e, item.href)}
+            >
+              <sup className={styles.num}>{item.num}</sup>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Hamburger button (<= 899px) */}
+        <button
+          type="button"
+          className={styles.hamburger}
+          onClick={toggleMenu}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+        >
+          <span className={`${styles.bar} ${menuOpen ? styles.barOpen : ''}`} />
+          <span className={`${styles.bar} ${menuOpen ? styles.barOpen : ''}`} />
+          <span className={`${styles.bar} ${menuOpen ? styles.barOpen : ''}`} />
+        </button>
+      </header>
+
+      <MobileMenu isOpen={menuOpen} onClose={closeMenu} activeSection={active} />
+    </>
   );
 }

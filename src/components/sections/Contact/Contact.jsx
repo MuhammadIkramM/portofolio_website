@@ -1,14 +1,21 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
-import { SOCIALS, FOOTER } from '@/data/social';
+import { SOCIALS } from '@/data/socials';
+import { FOOTER } from '@/data/social';
 import { LiveDate } from '@/components/ui/LiveDate';
 import { Reveal } from '@/components/ui/Reveal';
 import { ArrowButton } from '@/components/ui/ArrowButton';
 import styles from './Contact.module.css';
 
+const CONTACT_ORDER = ['email', 'instagram', 'linkedin', 'github'];
+
 export function Contact() {
   const sectionRef = useRef(null);
+
+  const contactSocials = CONTACT_ORDER.map((id) =>
+    SOCIALS.find((s) => s.id === id)
+  ).filter(Boolean);
 
   useGSAP(() => {
     const links = sectionRef.current.querySelectorAll(`.${styles.socialLink}`);
@@ -51,7 +58,7 @@ export function Contact() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <section id="kontak" ref={sectionRef} className={styles.contact}>
+    <section id="contact" ref={sectionRef} className={styles.contact}>
       <div className="section-kicker">
         <span>{FOOTER.kickerNum}</span> {FOOTER.kicker}
       </div>
@@ -59,21 +66,20 @@ export function Contact() {
       <Reveal>
         <h2 className={styles.heading}>
           {FOOTER.heading}<br />
-          <i className={styles.script}>{FOOTER.headingScript}</i>
+          <i className={styles.headingAccent}>{FOOTER.headingAccent}</i>
         </h2>
       </Reveal>
 
       <div className={styles.socials}>
-        {SOCIALS.map((social) => (
+        {contactSocials.map((social) => (
           <a
-            key={social.name}
-            href={social.url}
-            target="_blank"
-            rel="noreferrer"
+            key={social.id}
+            href={social.href}
+            target={social.external ? '_blank' : undefined}
+            rel={social.external ? 'noopener noreferrer' : undefined}
             className={styles.socialLink}
-            data-cursor
           >
-            <span>{social.name}</span>
+            <span>{social.label}</span>
             <span className={styles.arrow}>↗</span>
           </a>
         ))}
@@ -82,7 +88,7 @@ export function Contact() {
       <div className={styles.meta}>
         <span className={styles.credit}>{FOOTER.credit}</span>
         <LiveDate className={styles.metaDate} />
-        <button className={styles.backTop} onClick={scrollToTop}>
+        <button className={styles.backTop} onClick={scrollToTop} aria-label={FOOTER.backToTop}>
           {FOOTER.backToTop}
           <ArrowButton direction="up" className={styles.backTopBtn} />
         </button>

@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { PROFILE } from '@/data/profile';
 import { Signature } from '@/components/ui/Signature';
+import { DownloadIcon } from '@/components/ui/icons/DownloadIcon';
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './About.module.css';
 
@@ -28,9 +29,9 @@ export function About() {
   }, { scope: sectionRef });
 
   return (
-    <section id="profil" ref={sectionRef} className={styles.about}>
+    <section id="profile" ref={sectionRef} className={styles.about}>
       <div className="section-kicker">
-        <span>01</span> PROFIL
+        <span>01</span> PROFILE
       </div>
 
       <div className={styles.grid}>
@@ -42,8 +43,7 @@ export function About() {
             className={styles.portrait}
           />
           <div className={styles.caption}>
-            <span>{PROFILE.photoCaption.left}</span>
-            <span>{PROFILE.photoCaption.right}</span>
+            <span>{PROFILE.photoCaption}</span>
           </div>
         </div>
 
@@ -55,7 +55,7 @@ export function About() {
           <Reveal>
             <h2 className={styles.heading}>
               <span className={styles.headingMain}>{PROFILE.greeting}</span>
-              <span className={styles.scriptName}>{PROFILE.nameScript}</span>
+              <span className={styles.nameAccent}>{PROFILE.nameLabel}</span>
             </h2>
           </Reveal>
 
@@ -72,11 +72,16 @@ export function About() {
             ))}
           </div>
 
-          <Reveal className={styles.blockquote}>
-            <div className={styles.bqLabel}>{PROFILE.intro.label}</div>
-            <blockquote className={styles.bqText}>
-              &ldquo;{PROFILE.quote}&rdquo;
-            </blockquote>
+          <Reveal>
+            <a
+              href="/cv/Muhammad-Ikram-Muslimin-CV.pdf"
+              download
+              className={styles.cvButton}
+              aria-label="Download CV"
+            >
+              <DownloadIcon size={18} />
+              <span>Download CV</span>
+            </a>
           </Reveal>
         </div>
       </div>

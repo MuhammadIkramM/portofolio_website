@@ -24,8 +24,8 @@
 
 .caption {
   display: flex;
-  justify-content: space-between;
-  font: 500 8px / 1 var(--sans);
+  justify-content: flex-start;
+  font: 500 11px / 1 var(--font-sans);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding-top: 10px;
@@ -41,9 +41,12 @@
 
 .verticalSig {
   writing-mode: vertical-rl;
-  font-size: clamp(34px, 4vw, 50px);
-  color: var(--text);
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--text-3);
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .copy {
@@ -58,15 +61,18 @@
 }
 
 .headingMain {
-  font: 500 clamp(54px, 7.5vw, 96px) / 1.05 var(--serif);
+  font: 500 clamp(54px, 7.5vw, 96px) / 1.05 var(--font-display);
   letter-spacing: -0.04em;
   color: var(--text);
   font-optical-sizing: none;
   font-variation-settings: "opsz" 18;
 }
 
-.scriptName {
-  font: 400 clamp(50px, 6.8vw, 88px) / 1.1 var(--script);
+.nameAccent {
+  font: italic 500 clamp(50px, 6.8vw, 88px) / 1.1 var(--font-display);
+  letter-spacing: -0.02em;
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
   display: inline-block;
   color: var(--text);
 }
@@ -93,7 +99,7 @@
 }
 
 .fact small {
-  font: 500 7px / 1 var(--sans);
+  font: 500 8px / 1 var(--font-sans);
   letter-spacing: 0.25em;
   color: var(--text-3);
   text-transform: uppercase;
@@ -104,23 +110,26 @@
   color: var(--text);
 }
 
-.blockquote {
+.cvButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 40px;
-  padding-left: 16px;
-  border-left: 1px solid var(--line);
-}
-
-.bqLabel {
-  font: 500 8px / 1 var(--sans);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  color: var(--text-3);
-}
-
-.bqText {
-  font: italic clamp(16px, 1.8vw, 20px) / 1.5 var(--script);
+  padding: 14px 28px;
+  border: 1px solid var(--line);
   color: var(--text);
+  font: 500 14px / 1 var(--font-body);
+  letter-spacing: 0.05em;
+  background: transparent;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+}
+
+.cvButton:hover,
+.cvButton:focus-visible {
+  background: var(--paper);
+  color: var(--paper-ink);
+  border-color: var(--paper);
 }
 
 @media (max-width: 900px) {
@@ -147,7 +156,7 @@
     font-size: 16vw;
   }
 
-  .scriptName {
+  .nameAccent {
     font-size: 14vw;
   }
 
