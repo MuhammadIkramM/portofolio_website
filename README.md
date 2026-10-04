@@ -17,3 +17,4 @@ Then open the Vite local URL.
 - Replace the cropped images with the original high-resolution assets for a closer pixel match.
 - The project intentionally avoids claiming the original site's source code or private assets; it recreates the observed visual structure and interactions.
 # portofolio_website
+# portofolio_website
