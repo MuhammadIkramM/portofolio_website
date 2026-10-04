@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { GALLERY_ITEMS } from '@/data/gallery';
+import { GALLERY_HEADER, GALLERY_DARK_CARD, GALLERY_CTA, GALLERY_ITEMS } from '@/data/gallery';
+import { Signature } from '@/components/ui/Signature';
 import { createGalleryScroll } from '@/animations/gallery';
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './Gallery.module.css';
@@ -19,12 +20,17 @@ function PhotoCard({ item }) {
 
 function DarkCard() {
   return (
-    <article className={styles.darkCard}>
-      <small>JKT48 — NEW ERA</small>
-      <div className={styles.darkCardCenter}>
-        <span className={styles.darkJp}>マーシャ</span>
+    <article data-break-card data-paper className={styles.darkCard}>
+      <div className={styles.darkCardHeader}>
+        <small className={styles.roleEng}>{GALLERY_DARK_CARD.roleEng}</small>
+        <small className={styles.roleSec}>{GALLERY_DARK_CARD.roleSec}</small>
       </div>
-      <small>MARSHA LENATHEA</small>
+      <div className={styles.darkCardCenter}>
+        <Signature className={styles.darkCardSig} />
+      </div>
+      <div className={styles.darkCardFooter}>
+        <small className={styles.darkCardName}>{GALLERY_DARK_CARD.name}</small>
+      </div>
     </article>
   );
 }
@@ -33,9 +39,11 @@ function CtaCard() {
   return (
     <article className={styles.ctaCard}>
       <span className={styles.ctaScript}>
-        Selalu<br />nantikan<br />aku ya!
+        {GALLERY_CTA.text}
       </span>
-      <a href="#kontak" className={styles.ctaBtn}>KONTAK →</a>
+      <a href={GALLERY_CTA.buttonHref} className={styles.ctaBtn}>
+        {GALLERY_CTA.buttonText}
+      </a>
     </article>
   );
 }
@@ -57,17 +65,18 @@ export function Gallery() {
           </div>
           <Reveal>
             <h2 className={styles.heading}>
-              Potret <i className={styles.script}>Marsha</i>
+              {GALLERY_HEADER.title} <i className={styles.script}>{GALLERY_HEADER.script}</i>
             </h2>
           </Reveal>
         </div>
-        <span className={styles.hint}>GESER UNTUK MELIHAT →</span>
+        <span className={styles.hint}>{GALLERY_HEADER.hint}</span>
       </div>
 
       <div ref={trackRef} className={styles.track}>
         {GALLERY_ITEMS.map((item, i) => {
           if (item.type === 'dark') return <DarkCard key="dark" />;
           if (item.type === 'cta') return <CtaCard key="cta" />;
+          if (!item.src) return null;
           return <PhotoCard key={i} item={item} />;
         })}
       </div>

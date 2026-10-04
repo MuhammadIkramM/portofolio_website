@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
-import { STAGE_ITEMS, STAGE_INTRO } from '@/data/stage';
+import { STAGE_HEADER, STAGE_ITEMS, STAGE_INTRO } from '@/data/stage';
 import { ArrowButton } from '@/components/ui/ArrowButton';
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './Stage.module.css';
@@ -31,11 +31,11 @@ export function Stage() {
       <div className={styles.head}>
         <div>
           <div className="section-kicker">
-            <span>02</span> AKTIVITAS
+            <span>{STAGE_HEADER.kickerNum}</span> {STAGE_HEADER.kicker}
           </div>
           <Reveal>
             <h2 className={styles.heading}>
-              Di atas <i className={styles.script}>panggung</i>
+              {STAGE_HEADER.title} <i className={styles.script}>{STAGE_HEADER.titleScript}</i>
             </h2>
           </Reveal>
         </div>
@@ -48,7 +48,9 @@ export function Stage() {
         {STAGE_ITEMS.map((item, i) => (
           <div
             key={item.num}
-            className={`${styles.row} ${hoveredIdx === i ? styles.hovered : ''}`}
+            className={`${styles.row} ${hoveredIdx === i ? styles.hovered : ''} ${
+              item.accent === 'eng' ? styles.rowEng : item.accent === 'sec' ? styles.rowSec : styles.rowDefault
+            }`}
             onMouseEnter={() => setHoveredIdx(i)}
             onMouseLeave={() => setHoveredIdx(-1)}
             onMouseMove={handleMouseMove}
@@ -57,7 +59,7 @@ export function Stage() {
             <span className={styles.num}>({item.num})</span>
             <h3 className={styles.title}>{item.title}</h3>
             <p className={styles.desc}>{item.desc}</p>
-            <ArrowButton filled={hoveredIdx === i} />
+            <ArrowButton filled={hoveredIdx === i} className={styles.arrowBtn} />
           </div>
         ))}
       </div>

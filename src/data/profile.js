@@ -1,48 +1,58 @@
 export const PROFILE = {
+  name: 'Ikram',
+  firstName: 'Muhammad',
+  lastName: 'Muslimin',
+  fullName: 'Muhammad Ikram Muslimin',
+  alias: 'Zandik',
+  nameJp: 'イクラム',
+  city: null,
+  quote: 'Bangun yang berguna, amankan yang penting.',
+  signatureImage: null,
+
   greeting: 'Halo, aku',
-  nameScript: 'Marsha!',
-  bio: 'Marsha Lenathea adalah member JKT48 yang dijuluki sebagai anime hidup karena parasnya yang sangat rupawan. Lahir di Jakarta, saat ini ia aktif di berbagai kegiatan teater dan media.',
+  nameScript: 'Ikram!',
+  bio: 'Software developer dan pegiat cybersecurity. Aku membangun aplikasi web yang rapi dan cepat, dengan keamanan sebagai bagian dari rancangan, bukan tambalan di akhir.',
   photo: '/assets/profile/profile.jpg',
-  photoCaption: { left: 'NO. 001 — PORTRAIT', right: 'JKT48' },
+  photoCaption: { left: 'NO. 001 · PORTRAIT', right: 'IKRAM' },
   facts: [
-    { label: 'NAMA', value: 'Marsha Lenathea' },
-    { label: 'LAHIR', value: 'Jakarta, 9 Januari 2006' },
-    { label: 'GRUP', value: 'JKT48' },
-    { label: 'JULUKAN', value: 'Anime hidup' },
+    { label: 'NAMA', value: 'Muhammad Ikram Muslimin' },
+    { label: 'ALIAS', value: 'Zandik' },
+    { label: 'PERAN', value: 'Software Developer' },
+    { label: 'FOKUS', value: 'Cybersecurity' },
   ],
   intro: {
     label: 'PERKENALAN 自己紹介',
-    text: 'Seperti pizza yang dinanti-nantikan semua orang, selalu nantikan aku ya!',
+    text: 'Bangun yang berguna, amankan yang penting.',
   },
 };
 
 export const HERO = {
-  nameChars: ['M', 'A', 'R', 'S', 'H', 'A'],
-  japanese: 'マーシャ',
-  japaneseChars: ['マ', 'ー', 'シ', 'ャ'],
-  signature: 'Lenathea',
+  nameChars: ['I', 'K', 'R', 'A', 'M'],
+  topLabel: 'Muhammad',
+  signature: 'Muslimin',
   photo: '/assets/hero/hero-cutout.png',
-  jikosoukai: {
-    title: 'JIKOSOUKAI',
-    text: 'Seperti pizza yang dinanti-nantikan semua orang, selalu nantikan aku ya! Halo aku Marsha!',
+  leftTop: {
+    quote: 'Bangun yang berguna, amankan yang penting.',
   },
-  date: 'Jakarta,09-01-2006',
-  credit: 'Project By [NAMA SAYA]',
-  currentNews: {
-    title: 'Current News !!',
-    text: 'Marsha adalah member JKT48 yang dijuluki sebagai anime hidup karena parasnya yang sangat rupawan.',
+  softwareDev: {
+    title: 'Software Developer',
+    text: 'Membangun aplikasi web yang rapi, cepat, dan mudah dirawat.',
   },
-  question: {
-    title: 'The Question Is:',
-    quote: '"It\'s not impossible, it\'s just hard"',
-    attribution: '~Marsha Lenathea~',
+  cybersecurity: {
+    title: 'Cybersecurity',
+    text: 'Keamanan dirancang sejak awal, bukan ditambal di akhir.',
+    attribution: '~Ikram~',
   },
 };
 
-export const MARQUEE_TEXT = 'Marsha Lenathea ✦ マーシャ ✦ JKT48 ✦ New Era ✦ ';
+export const MARQUEE_DATA = {
+  name: 'Ikram',
+  nameJp: 'イクラム',
+  alias: 'Zandik',
+};
 
 export const QUOTE_DATA = {
-  label: '03  THE QUESTION IS',
-  words: "It's not impossible, it's just hard.".split(' '),
-  attribution: '~Marsha Lenathea~',
+  label: '03  QUOTE',
+  words: 'Bangun yang berguna, amankan yang penting.'.split(' '),
+  attribution: '~Ikram~',
 };

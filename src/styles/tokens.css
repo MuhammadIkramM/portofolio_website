@@ -1,17 +1,104 @@
 :root {
-  --bg: #EDEDED;
-  --dark: #1F1F1F;
-  --ink: #111111;
-  --on-dark: #EDEDED;
-  --line: rgba(17, 17, 17, 0.7);
-  --line-dark: rgba(237, 237, 237, 0.25);
+  /* RGB untuk lapisan latar & glow */
+  --glow-eng-rgb: 9,132,227;      /* biru */
+  --glow-sec-rgb: 237,41,57;      /* Imperial Red #ED2939 */
 
+  /* Overlay kedalaman section (Quote) */
+  --overlay-rgb: 5,5,5;
+  --overlay-a: .40;                           /* sebelumnya .55; sekarang hanya dipakai Quote */
+  --feather: clamp(120px, 20vh, 220px);       /* panjang fade di tepi atas & bawah */
+
+  /* Lapisan latar gradien diagonal linear */
+  --grad-start-rgb: 5,99,180;
+  --grad-end-rgb: 227,27,35;
+  --grad-strength: .75;     /* 1 = intensitas sekarang; makin kecil makin redup */
+  --grad-dark-from: 38%;    /* biru habis di sini (sebelumnya 36%) */
+  --grad-dark-to: 62%;      /* merah mulai di sini (sebelumnya 64%) */
+
+  /* Basis latar gelap */
+  --dark: #0A0A0A;
+  --dark-raised: #111214;
+  --dark-soft: #1E1E1E;
+  --canvas: #050505;
+
+  /* Teks di atas latar gelap */
+  --text:   #F5F5F5;
+  --text-2: rgba(255,255,255,.70);
+  --text-3: rgba(255,255,255,.60);
+  --text-4: rgba(255,255,255,.40);
+  --line:   rgba(255,255,255,.25);
+
+  /* Elemen INVERSE (terang di atas latar gelap): band marquee, kartu break galeri,
+     kolom wipe, fill hover sel sosial */
+  --paper: #EDEDED;
+  --paper-ink: #0A0A0A;
+
+  /* Aksen untuk latar GELAP */
+  --eng:   #00D4FF;
+  --eng-2: #00CEC9;
+  --sec:   #FB3640;
+  --sec-bright: #FF6B73;
+
+  /* Aksen untuk latar TERANG (--paper).
+     Token *-on-light dan *-ink-light HANYA dipakai di atas elemen --paper. */
+  --eng-on-light: #0984E3;
+  --sec-on-light: #D7263D;
+  --eng-ink-light: #102552;
+  --sec-ink-light: #8B1221;
+
+  /* Glow ambient legacy fallback */
+  --glow-eng: #0984E3;
+  --glow-sec: #8B1221;
+
+  /* Lines legacy alias */
+  --line-dark: rgba(255, 255, 255, 0.25);
+
+  /* Typography stacks */
   --serif: 'Bodoni Moda', 'Georgia', serif;
-  --script: 'Pinyon Script', cursive;
+  --script: 'Mr Dafoe', cursive;
+  --signature: 'Mr Dafoe', cursive;
   --sans: 'Jost', 'Arial', sans-serif;
   --jp: 'Noto Sans JP', sans-serif;
-  --text: 'Newsreader', 'Georgia', serif;
+  --font-body: 'Newsreader', 'Georgia', serif;
 
+  /* Compatibility aliases */
+  --on-dark: var(--text);
+  --on-dark-2: var(--text-2);
+  --on-dark-3: var(--text-3);
+  --on-dark-4: var(--text-4);
+
+  /* Layout */
   --nav-height: 0px;
   --frame-inset: 20px;
+
+  /* ========================================================================
+     RESERVED TOKENS (not yet used)
+     ======================================================================== */
+
+  /* Glassmorphism
+     background: rgba(255,255,255,.03);
+     border: 1px solid rgba(255,255,255,.08);
+  */
+
+  /* Modal backdrop
+     background: rgba(0,0,0,.70);
+  */
+
+  /* Badge status kerja
+     --badge-available: #22C55E;
+     --badge-busy: #F59E0B;
+  */
+
+  /* Brand tech stack
+     --brand-react:      #61DAFB;
+     --brand-nextjs:     #FFFFFF;
+     --brand-typescript: #3178C6;
+     --brand-tailwind:   #06B6D4;
+     --brand-node:       #339933;
+     --brand-python:     #3776AB;
+     --brand-docker:     #2496ED;
+     --brand-aws:        #FF9900;
+     --brand-firebase:   #FFCA28;
+     --brand-git:        #F05032;
+  */
 }

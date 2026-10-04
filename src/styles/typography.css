@@ -1,15 +1,21 @@
 .display-xl {
   font: 500 clamp(120px, 18vw, 230px) / 0.8 var(--serif);
   letter-spacing: -0.07em;
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
 }
 
 .display-lg {
   font: 500 clamp(70px, 9vw, 130px) / 0.75 var(--serif);
   letter-spacing: -0.05em;
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
 }
 
 .display-md {
   font: italic clamp(50px, 5vw, 56px) / 0.85 var(--serif);
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
 }
 
 .script-lg {
@@ -39,6 +45,7 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   margin-bottom: 26px;
+  color: var(--text-3);
 }
 
 .section-kicker span {

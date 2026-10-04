@@ -28,10 +28,9 @@ export function createHeroIntro(refs) {
   }, '-=0.2');
 
   tl.fromTo(refs.textBlocks, {
-    color: '#999',
     opacity: 0.3,
   }, {
-    color: 'var(--ink)',
+    color: 'var(--text)',
     opacity: 1,
     duration: 0.5,
     stagger: 0.08,

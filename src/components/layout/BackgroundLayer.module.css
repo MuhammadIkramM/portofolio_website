@@ -1,0 +1,25 @@
+.bg-layer,
+.layer {
+  position: fixed;
+  inset: 0;
+  height: 100svh;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg,
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * 1))   0%,
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * .94)) calc(var(--grad-dark-from) * .15),
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * .78)) calc(var(--grad-dark-from) * .30),
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * .50)) calc(var(--grad-dark-from) * .50),
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * .22)) calc(var(--grad-dark-from) * .70),
+      rgba(var(--grad-start-rgb), calc(var(--grad-strength) * .06)) calc(var(--grad-dark-from) * .85),
+      rgba(var(--grad-start-rgb), 0) var(--grad-dark-from),
+      rgba(var(--grad-end-rgb), 0) var(--grad-dark-to),
+      rgba(var(--grad-end-rgb), calc(var(--grad-strength) * .06)) calc(var(--grad-dark-to) + (100% - var(--grad-dark-to)) * .15),
+      rgba(var(--grad-end-rgb), calc(var(--grad-strength) * .22)) calc(var(--grad-dark-to) + (100% - var(--grad-dark-to)) * .30),
+      rgba(var(--grad-end-rgb), calc(var(--grad-strength) * .50)) calc(var(--grad-dark-to) + (100% - var(--grad-dark-to)) * .50),
+      rgba(var(--grad-end-rgb), calc(var(--grad-strength) * .78)) calc(var(--grad-dark-to) + (100% - var(--grad-dark-to)) * .70),
+      rgba(var(--grad-end-rgb), calc(var(--grad-strength) * .94)) calc(var(--grad-dark-to) + (100% - var(--grad-dark-to)) * .85),
+      rgba(var(--grad-end-rgb), var(--grad-strength)) 100%),
+    var(--dark);
+}

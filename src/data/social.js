@@ -1,12 +1,16 @@
 export const SOCIALS = [
-  { name: 'Instagram', url: 'https://www.instagram.com/jkt48.marsha/' },
-  { name: 'X / Twitter', url: 'https://x.com/' },
-  { name: 'TikTok', url: 'https://www.tiktok.com/' },
-  { name: 'JKT48', url: 'https://jkt48.com/' },
+  { name: 'Instagram', url: '#' },
+  { name: 'GitHub', url: '#' },
+  { name: 'LinkedIn', url: '#' },
+  { name: 'X / Twitter', url: '#' },
 ];
 
 export const FOOTER = {
-  credit: 'PROJECT BY [NAMA SAYA]',
-  date: 'Jakarta, 09-01-2006',
-  copyright: '© 2026 [NAMA SAYA] — MARSHA LENATHEA PORTFOLIO',
+  kicker: 'KONTAK',
+  kickerNum: '05',
+  heading: 'Terima kasih sudah',
+  headingScript: 'mampir!',
+  credit: 'MUHAMMAD IKRAM MUSLIMIN',
+  backToTop: 'KEMBALI KE ATAS',
+  giant: 'IKRAM',
 };

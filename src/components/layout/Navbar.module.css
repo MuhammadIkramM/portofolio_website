@@ -9,11 +9,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #fff;
-  mix-blend-mode: difference;
+  color: var(--text);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.35s ease, color 0.3s ease;
+}
+
+.navOnPaper,
+:global(.nav--on-paper) {
+  color: var(--paper-ink) !important;
 }
 
 .nav > * {

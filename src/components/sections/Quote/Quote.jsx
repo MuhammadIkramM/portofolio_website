@@ -43,10 +43,8 @@ export function Quote() {
   }, { scope: sectionRef });
 
   return (
-    <section id="quote" ref={sectionRef} className={styles.quote}>
+    <section id="quote" ref={sectionRef} className={`${styles.quote} section--deep`}>
       <div className={styles.label}>{QUOTE_DATA.label}</div>
-
-      <div className={styles.bgChar} aria-hidden="true">マ</div>
 
       <blockquote className={styles.text}>
         {QUOTE_DATA.words.map((word, i) => (

@@ -5,6 +5,7 @@ import { useCursor } from '@/hooks/useCursor';
 import { Navbar } from '@/components/layout/Navbar';
 import { Cursor } from '@/components/layout/Cursor';
 import { Preloader } from '@/components/layout/Preloader';
+import { BackgroundLayer } from '@/components/layout/BackgroundLayer';
 import { Hero } from '@/components/sections/Hero/Hero';
 import { Marquee } from '@/components/sections/Marquee/Marquee';
 import { About } from '@/components/sections/About/About';
@@ -27,6 +28,7 @@ export default function App() {
     // Collect DOM elements for master intro
     const preloaderDark = document.querySelector('[data-preloader-dark]');
     const preloaderInner = document.querySelector('[data-preloader-inner]');
+    const preloaderSignature = document.querySelector('[data-preloader-signature]');
     const preloaderChars = Array.from(document.querySelectorAll('[data-preloader-char] > span'));
     const preloaderCounter = document.querySelector('[data-preloader-counter]');
     const preloaderProgress = document.querySelector('[data-preloader-progress]');
@@ -36,7 +38,7 @@ export default function App() {
 
     const heroPhoto = document.querySelector('[data-hero-photo]');
     const heroNameChars = Array.from(document.querySelectorAll('[data-hero-name-char] > span'));
-    const heroJpChars = Array.from(document.querySelectorAll('[data-hero-jp-char] > span'));
+    const heroTopChars = Array.from(document.querySelectorAll('[data-hero-top-char] > span, [data-hero-jp-char] > span'));
     const heroTextBlocks = Array.from(document.querySelectorAll('[data-hero-text]'));
     const heroDripLines = Array.from(document.querySelectorAll('[data-hero-drip]'));
     const heroFrame = document.querySelector('[data-hero-frame]');
@@ -47,6 +49,7 @@ export default function App() {
       preloader: {
         container: preloaderDark,
         inner: preloaderInner,
+        signature: preloaderSignature,
         chars: preloaderChars,
         counterEl: preloaderCounter,
         progressBar: preloaderProgress,
@@ -58,7 +61,8 @@ export default function App() {
       hero: {
         photo: heroPhoto,
         nameChars: heroNameChars,
-        jpChars: heroJpChars,
+        topLabelChars: heroTopChars,
+        jpChars: heroTopChars,
         textBlocks: heroTextBlocks,
         dripLines: heroDripLines,
         frame: heroFrame,
@@ -87,7 +91,8 @@ export default function App() {
 
   return (
     <>
-      <Preloader />
+      <BackgroundLayer />
+      {!introDone && <Preloader />}
       <Cursor ref={cursorRef} />
       <Navbar />
       <main>

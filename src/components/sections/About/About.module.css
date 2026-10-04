@@ -1,11 +1,13 @@
 .about {
   padding: 110px 6vw;
+  background: transparent;
+  color: var(--text);
 }
 
 .grid {
   display: grid;
   grid-template-columns: 34% auto 1fr;
-  gap: 24px;
+  gap: 32px;
   align-items: start;
 }
 
@@ -27,14 +29,21 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding-top: 10px;
+  color: var(--text-3);
 }
 
-.jpCol {
+.sigCol {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font: 400 16px / 1.6 var(--jp);
-  padding-top: 60px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+.verticalSig {
+  writing-mode: vertical-rl;
+  font-size: clamp(34px, 4vw, 50px);
+  color: var(--text);
+  letter-spacing: 0.1em;
 }
 
 .copy {
@@ -42,19 +51,29 @@
 }
 
 .heading {
-  font: 500 clamp(60px, 8vw, 100px) / 0.78 var(--serif);
-  letter-spacing: -0.05em;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.headingMain {
+  font: 500 clamp(54px, 7.5vw, 96px) / 1.05 var(--serif);
+  letter-spacing: -0.04em;
+  color: var(--text);
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 18;
 }
 
 .scriptName {
-  font-family: var(--script);
-  font-weight: 400;
-  font-size: 1.1em;
+  font: 400 clamp(50px, 6.8vw, 88px) / 1.1 var(--script);
+  display: inline-block;
+  color: var(--text);
 }
 
 .lead {
-  font: 400 clamp(15px, 1.6vw, 19px) / 1.55 var(--text);
+  font: 400 clamp(15px, 1.6vw, 19px) / 1.55 var(--font-body);
+  color: var(--text);
   max-width: 520px;
   margin-bottom: 40px;
 }
@@ -76,12 +95,13 @@
 .fact small {
   font: 500 7px / 1 var(--sans);
   letter-spacing: 0.25em;
-  color: #777;
+  color: var(--text-3);
   text-transform: uppercase;
 }
 
 .fact b {
-  font: 500 clamp(14px, 1.4vw, 17px) / 1.2 var(--text);
+  font: 500 clamp(14px, 1.4vw, 17px) / 1.2 var(--font-body);
+  color: var(--text);
 }
 
 .blockquote {
@@ -95,11 +115,12 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 10px;
-  color: #777;
+  color: var(--text-3);
 }
 
 .bqText {
   font: italic clamp(16px, 1.8vw, 20px) / 1.5 var(--script);
+  color: var(--text);
 }
 
 @media (max-width: 900px) {
@@ -108,7 +129,7 @@
     gap: 40px;
   }
 
-  .jpCol {
+  .sigCol {
     display: none;
   }
 
@@ -122,8 +143,12 @@
     padding: 80px 6vw;
   }
 
-  .heading {
-    font-size: 18vw;
+  .headingMain {
+    font-size: 16vw;
+  }
+
+  .scriptName {
+    font-size: 14vw;
   }
 
   .facts {

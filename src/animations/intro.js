@@ -12,17 +12,20 @@ export function revealHeroImmediately(heroRefs) {
   if (heroRefs.nameChars && heroRefs.nameChars.length > 0) {
     gsap.set(heroRefs.nameChars, { y: 0, yPercent: 0 });
   }
-  if (heroRefs.jpChars && heroRefs.jpChars.length > 0) {
-    gsap.set(heroRefs.jpChars, { y: 0, yPercent: 0 });
+  const topChars = (heroRefs.topLabelChars && heroRefs.topLabelChars.length > 0)
+    ? heroRefs.topLabelChars
+    : heroRefs.jpChars;
+  if (topChars && topChars.length > 0) {
+    gsap.set(topChars, { y: 0, yPercent: 0 });
   }
   if (heroRefs.textBlocks && heroRefs.textBlocks.length > 0) {
-    gsap.set(heroRefs.textBlocks, { opacity: 1, color: '#111' });
+    gsap.set(heroRefs.textBlocks, { opacity: 1 });
   }
   if (heroRefs.dripLines && heroRefs.dripLines.length > 0) {
     gsap.set(heroRefs.dripLines, { scaleY: 1 });
   }
   if (heroRefs.frame) {
-    gsap.set(heroRefs.frame, { borderColor: 'var(--ink)' });
+    gsap.set(heroRefs.frame, { borderColor: 'var(--line)' });
   }
   if (heroRefs.signature) {
     gsap.set(heroRefs.signature, { clipPath: 'inset(0 0% 0 0)' });
@@ -39,8 +42,16 @@ function createPreloaderSubTimeline(preloader) {
   const tl = gsap.timeline();
   const counterObj = { value: 0 };
 
-  // Japanese characters rise from mask (stagger 0.1s, duration 0.5s)
-  if (preloader.chars && preloader.chars.length > 0) {
+  // Signature "Zandik" write-on (clip-path left-to-right)
+  const sigEl = preloader.signature || (preloader.chars && preloader.chars[0]);
+  if (sigEl) {
+    tl.fromTo(
+      sigEl,
+      { clipPath: 'inset(0 100% 0 0)' },
+      { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power2.inOut' },
+      0
+    );
+  } else if (preloader.chars && preloader.chars.length > 0) {
     tl.fromTo(
       preloader.chars,
       { y: 0, yPercent: 110 },
@@ -94,9 +105,9 @@ function createPreloaderSubTimeline(preloader) {
 function createWipeSubTimeline(wipe) {
   const tl = gsap.timeline();
 
-  // 5 columns rising from bottom (yPercent 100 -> 0)
-  // Stagger 0.07s left to right, duration 0.5s, power3.inOut
   if (wipe.cols && wipe.cols.length > 0) {
+    // Tahap 1: 5 kolom naik dari bawah (yPercent 100 -> 0) menutup layar
+    // Stagger 0.07s left to right, durasi 0.5s, power3.inOut
     tl.fromTo(
       wipe.cols,
       { y: 0, yPercent: 100 },
@@ -108,6 +119,21 @@ function createWipeSubTimeline(wipe) {
         ease: 'power3.inOut',
       },
       0
+    );
+
+    // Tahap 2 (baru): Kolom keluar ke atas (yPercent 0 -> -100) membuka hero gelap
+    // Stagger 0.07s left to right, durasi 0.5s, power3.inOut
+    // Mulai saat kolom terakhir menutup layar (0.8s)
+    tl.to(
+      wipe.cols,
+      {
+        y: 0,
+        yPercent: -100,
+        duration: 0.5,
+        stagger: 0.07,
+        ease: 'power3.inOut',
+      },
+      0.8
     );
   }
 
@@ -130,7 +156,7 @@ function createHeroIntroSubTimeline(hero) {
     );
   }
 
-  // 2. Letters M A R S H A rise from mask one by one (stagger 0.09s, starts at 0.10s)
+  // 2. Letters I K R A M rise from mask one by one (stagger 0.09s, starts at 0.10s)
   if (hero.nameChars && hero.nameChars.length > 0) {
     tl.fromTo(
       hero.nameChars,
@@ -140,22 +166,25 @@ function createHeroIntroSubTimeline(hero) {
     );
   }
 
-  // 3. Japanese characters on Hero appear left to right (stagger 0.1s, starts at 0.35s)
-  if (hero.jpChars && hero.jpChars.length > 0) {
+  // 3. Top baris kecil "Muhammad" appear left to right (stagger 0.05s, starts at 0.35s)
+  const topChars = (hero.topLabelChars && hero.topLabelChars.length > 0)
+    ? hero.topLabelChars
+    : hero.jpChars;
+  if (topChars && topChars.length > 0) {
     tl.fromTo(
-      hero.jpChars,
+      topChars,
       { y: 0, yPercent: 110 },
-      { y: 0, yPercent: 0, duration: 0.4, stagger: 0.1, ease: 'power3.out' },
+      { y: 0, yPercent: 0, duration: 0.4, stagger: 0.05, ease: 'power3.out' },
       0.35
     );
   }
 
-  // 4. Small text blocks fade opacity 0->1 and color #9e9e9e->#111 (starts at 0.60s)
+  // 4. Small text blocks fade opacity 0->1 (starts at 0.60s)
   if (hero.textBlocks && hero.textBlocks.length > 0) {
     tl.fromTo(
       hero.textBlocks,
-      { opacity: 0, color: '#9e9e9e' },
-      { opacity: 1, color: '#111', duration: 0.5, stagger: 0.08, ease: 'power2.out' },
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
       0.6
     );
   }
@@ -180,12 +209,12 @@ function createHeroIntroSubTimeline(hero) {
     tl.fromTo(
       hero.frame,
       { borderColor: 'transparent' },
-      { borderColor: 'var(--ink)', duration: 0.4, ease: 'power2.out' },
+      { borderColor: 'var(--line)', duration: 0.4, ease: 'power2.out' },
       0.9
     );
   }
 
-  // 6. Signature "Lenathea" written left to right with clip-path (duration 0.9s, starts at 1.30s)
+  // 6. Signature "Muslimin" written left to right with clip-path (duration 0.9s, starts at 1.30s)
   if (hero.signature) {
     tl.fromTo(
       hero.signature,
@@ -239,8 +268,8 @@ export function createMasterIntroTimeline(elements, options = {}) {
         hero.frame.style.zIndex = 'auto';
       }
 
-      // Restore body background to light
-      document.body.style.backgroundColor = 'var(--bg)';
+      // Keep body background transparent
+      document.body.style.backgroundColor = 'transparent';
 
       if (options.onComplete) {
         options.onComplete();
@@ -263,12 +292,11 @@ export function createMasterIntroTimeline(elements, options = {}) {
   masterTl.addLabel('wipe-start', 2.37);
   masterTl.add(wipeTl, 'wipe-start');
 
-  // Hero intro starts at 2.90s (video 3.30s)
-  // Overlaps the wipe before column 5 finishes (column 5 ends at 3.15s)
-  masterTl.addLabel('hero-start', 2.9);
+  // Hero intro starts at 3.27s (approx 0.1s after wipe phase 2 starts at 3.17s)
+  masterTl.addLabel('hero-start', 3.27);
   masterTl.add(heroIntroTl, 'hero-start');
 
-  masterTl.addLabel('intro-complete', 5.1);
+  masterTl.addLabel('intro-complete', 5.5);
 
   return masterTl;
 }
@@ -304,7 +332,7 @@ export function initMasterIntro(elements, options = {}) {
       gsap.set(elements.hero.frame, { clearProps: 'zIndex' });
       elements.hero.frame.style.zIndex = 'auto';
     }
-    document.body.style.backgroundColor = 'var(--bg)';
+    document.body.style.backgroundColor = 'transparent';
     window.__lenis?.start();
     if (options.onComplete) {
       options.onComplete();
@@ -312,7 +340,11 @@ export function initMasterIntro(elements, options = {}) {
     return null;
   }
 
-  // Explicitly reset initial transforms and states before timeline to fix CSS translateY vs GSAP px:
+  // Explicitly reset initial transforms and states before timeline:
+  const sigEl = elements.preloader?.signature || (elements.preloader?.chars && elements.preloader.chars[0]);
+  if (sigEl) {
+    gsap.set(sigEl, { clipPath: 'inset(0 100% 0 0)' });
+  }
   if (elements.preloader?.chars && elements.preloader.chars.length > 0) {
     gsap.set(elements.preloader.chars, { y: 0, yPercent: 110 });
   }
@@ -322,11 +354,14 @@ export function initMasterIntro(elements, options = {}) {
   if (elements.hero?.nameChars && elements.hero.nameChars.length > 0) {
     gsap.set(elements.hero.nameChars, { y: 0, yPercent: 110 });
   }
-  if (elements.hero?.jpChars && elements.hero.jpChars.length > 0) {
-    gsap.set(elements.hero.jpChars, { y: 0, yPercent: 110 });
+  const topChars = (elements.hero?.topLabelChars && elements.hero.topLabelChars.length > 0)
+    ? elements.hero.topLabelChars
+    : elements.hero?.jpChars;
+  if (topChars && topChars.length > 0) {
+    gsap.set(topChars, { y: 0, yPercent: 110 });
   }
   if (elements.hero?.textBlocks && elements.hero.textBlocks.length > 0) {
-    gsap.set(elements.hero.textBlocks, { opacity: 0, color: '#9e9e9e' });
+    gsap.set(elements.hero.textBlocks, { opacity: 0 });
   }
   if (elements.hero?.frame) {
     gsap.set(elements.hero.frame, { zIndex: 30 });

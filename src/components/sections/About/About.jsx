@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { PROFILE } from '@/data/profile';
+import { Signature } from '@/components/ui/Signature';
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './About.module.css';
 
@@ -37,7 +38,7 @@ export function About() {
           <img
             ref={photoRef}
             src={PROFILE.photo}
-            alt="Marsha Lenathea portrait"
+            alt={`${PROFILE.fullName} portrait`}
             className={styles.portrait}
           />
           <div className={styles.caption}>
@@ -46,19 +47,15 @@ export function About() {
           </div>
         </div>
 
-        <div className={styles.jpCol}>
-          {PROFILE.greeting === 'Halo, aku' && (
-            <>{'マ\nー\nシ\nャ'.split('\n').map((c, i) => (
-              <span key={i}>{c}</span>
-            ))}</>
-          )}
+        <div className={styles.sigCol}>
+          <Signature className={styles.verticalSig} />
         </div>
 
         <div className={styles.copy}>
           <Reveal>
             <h2 className={styles.heading}>
-              {PROFILE.greeting}<br />
-              <i className={styles.scriptName}>{PROFILE.nameScript}</i>
+              <span className={styles.headingMain}>{PROFILE.greeting}</span>
+              <span className={styles.scriptName}>{PROFILE.nameScript}</span>
             </h2>
           </Reveal>
 
@@ -78,7 +75,7 @@ export function About() {
           <Reveal className={styles.blockquote}>
             <div className={styles.bqLabel}>{PROFILE.intro.label}</div>
             <blockquote className={styles.bqText}>
-              &ldquo;{PROFILE.intro.text}&rdquo;
+              &ldquo;{PROFILE.quote}&rdquo;
             </blockquote>
           </Reveal>
         </div>

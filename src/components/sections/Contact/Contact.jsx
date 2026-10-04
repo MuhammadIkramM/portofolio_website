@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { SOCIALS, FOOTER } from '@/data/social';
+import { LiveDate } from '@/components/ui/LiveDate';
 import { Reveal } from '@/components/ui/Reveal';
 import { ArrowButton } from '@/components/ui/ArrowButton';
 import styles from './Contact.module.css';
@@ -47,16 +48,18 @@ export function Contact() {
     }
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <section id="kontak" ref={sectionRef} className={styles.contact}>
-      <div className="section-kicker" style={{ color: 'var(--on-dark)' }}>
-        <span>05</span> KONTAK
+      <div className="section-kicker">
+        <span>{FOOTER.kickerNum}</span> {FOOTER.kicker}
       </div>
 
       <Reveal>
         <h2 className={styles.heading}>
-          Terima kasih sudah<br />
-          <i className={styles.script}>mampir!</i>
+          {FOOTER.heading}<br />
+          <i className={styles.script}>{FOOTER.headingScript}</i>
         </h2>
       </Reveal>
 
@@ -77,17 +80,21 @@ export function Contact() {
       </div>
 
       <div className={styles.meta}>
-        <span>{FOOTER.credit}</span>
-        <span className={styles.metaDate}>{FOOTER.date}</span>
+        <span className={styles.credit}>{FOOTER.credit}</span>
+        <LiveDate className={styles.metaDate} />
         <button className={styles.backTop} onClick={scrollToTop}>
-          KEMBALI KE ATAS
+          {FOOTER.backToTop}
           <ArrowButton direction="up" className={styles.backTopBtn} />
         </button>
       </div>
 
-      <div className={styles.giant} aria-hidden="true">MARSHA</div>
+      <div className={styles.giantWrap}>
+        <div className={styles.giant} aria-hidden="true">{FOOTER.giant}</div>
+      </div>
 
-      <div className={styles.copyright}>{FOOTER.copyright}</div>
+      <div className={styles.copyright}>
+        &copy; {currentYear} {FOOTER.credit} · Portfolio
+      </div>
     </section>
   );
 }
