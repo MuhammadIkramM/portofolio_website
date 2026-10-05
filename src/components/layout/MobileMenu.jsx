@@ -6,17 +6,11 @@ import { SocialIconLink } from '@/components/ui/SocialIconLink';
 import { DownloadIcon } from '@/components/ui/icons/DownloadIcon';
 import styles from './MobileMenu.module.css';
 
-const SOCIAL_ORDER = ['instagram', 'linkedin', 'github', 'email'];
-
 export function MobileMenu({ isOpen, onClose, activeSection }) {
   const overlayRef = useRef(null);
   const linkRefs = useRef([]);
   const firstLinkRef = useRef(null);
   const prevFocusRef = useRef(null);
-
-  const menuSocials = SOCIAL_ORDER
-    .map((id) => SOCIALS.find((s) => s.id === id))
-    .filter(Boolean);
 
   const animateOpen = useCallback(() => {
     const overlay = overlayRef.current;
@@ -185,7 +179,7 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
 
       <div className={styles.footer}>
         <div className={styles.socialRow}>
-          {menuSocials.map((social) => (
+          {SOCIALS.map((social) => (
             <SocialIconLink key={social.id} social={social} />
           ))}
         </div>

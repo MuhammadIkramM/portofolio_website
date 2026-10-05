@@ -22,7 +22,7 @@ export function SocialIconLink({ social, className = '', ...props }) {
   return (
     <a
       href={social.href}
-      aria-label={social.label}
+      aria-label={social.ariaLabel || social.label}
       className={`${styles.iconLink} ${className}`}
       {...externalProps}
       {...props}

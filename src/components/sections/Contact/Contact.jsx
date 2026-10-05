@@ -8,14 +8,8 @@ import { Reveal } from '@/components/ui/Reveal';
 import { ArrowButton } from '@/components/ui/ArrowButton';
 import styles from './Contact.module.css';
 
-const CONTACT_ORDER = ['email', 'instagram', 'linkedin', 'github'];
-
 export function Contact() {
   const sectionRef = useRef(null);
-
-  const contactSocials = CONTACT_ORDER.map((id) =>
-    SOCIALS.find((s) => s.id === id)
-  ).filter(Boolean);
 
   useGSAP(() => {
     const links = sectionRef.current.querySelectorAll(`.${styles.socialLink}`);
@@ -70,13 +64,18 @@ export function Contact() {
         </h2>
       </Reveal>
 
-      <div className={styles.socials}>
-        {contactSocials.map((social) => (
+      <div
+        className={styles.socials}
+        data-count={SOCIALS.length}
+        style={{ '--social-count': SOCIALS.length }}
+      >
+        {SOCIALS.map((social) => (
           <a
             key={social.id}
             href={social.href}
             target={social.external ? '_blank' : undefined}
             rel={social.external ? 'noopener noreferrer' : undefined}
+            aria-label={social.ariaLabel || social.label}
             className={styles.socialLink}
           >
             <span>{social.label}</span>

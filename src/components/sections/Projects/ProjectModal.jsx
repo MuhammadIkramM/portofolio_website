@@ -13,6 +13,7 @@ export function ProjectModal({ project, onClose }) {
   const closeBtnRef = useRef(null);
   const prevFocusedRef = useRef(null);
   const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     prevFocusedRef.current = document.activeElement;
@@ -115,16 +116,19 @@ export function ProjectModal({ project, onClose }) {
       <div ref={panelRef} className={`${styles.panel} ${accentClass}`}>
         {/* Top: Thumbnail banner with 44px circular close button */}
         <div className={styles.banner}>
-          {!project.thumbnail || imgError ? (
-            <div className={styles.bannerFallback}>
-              <span className={styles.fallbackTitle}>{project.title}</span>
-            </div>
-          ) : (
+          <div className={styles.bannerFallback}>
+            <span className={styles.fallbackTitle}>{project.title}</span>
+          </div>
+
+          {project.thumbnail && !imgError && (
             <img
               src={project.thumbnail}
               alt={project.title}
+              decoding="async"
+              onLoad={() => setImgLoaded(true)}
               onError={() => setImgError(true)}
-              className={styles.bannerImg}
+              className={`${styles.bannerImg} ${imgLoaded ? styles.bannerImgLoaded : ''}`}
+              style={{ objectPosition: project.thumbnailPosition || 'center top' }}
             />
           )}
 

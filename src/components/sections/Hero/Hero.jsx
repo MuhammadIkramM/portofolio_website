@@ -8,7 +8,6 @@ import { createHeroExit } from '@/animations/hero';
 import styles from './Hero.module.css';
 
 const DRIP_HEIGHTS = [38, 22, 45, 26, 52, 30, 40];
-const HERO_SOCIAL_ORDER = ['instagram', 'linkedin', 'github', 'email'];
 
 export function Hero() {
   const sectionRef = useRef(null);
@@ -21,10 +20,6 @@ export function Hero() {
     }
   }, { scope: sectionRef });
 
-  const heroSocials = HERO_SOCIAL_ORDER
-    .map((id) => SOCIALS.find((s) => s.id === id))
-    .filter(Boolean);
-
   return (
     <section id="top" ref={sectionRef} className={styles.hero}>
       <div data-hero-frame className={`${styles.frame} hero__frame`}>
@@ -32,7 +27,7 @@ export function Hero() {
           {/* Top-left: social icon links */}
           <div data-hero-text className={styles.textBlock}>
             <div className={styles.socialRow}>
-              {heroSocials.map((social) => (
+              {SOCIALS.map((social) => (
                 <SocialIconLink key={social.id} social={social} data-hero-social />
               ))}
             </div>

@@ -9,8 +9,16 @@ export function Projects() {
   const sectionRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const cardRefs = useRef({});
+  const preloadedImagesRef = useRef(new Set());
 
-  const handleCardClick = (project, id) => {
+  const preloadThumbnail = (thumbnail) => {
+    if (!thumbnail || preloadedImagesRef.current.has(thumbnail)) return;
+    preloadedImagesRef.current.add(thumbnail);
+    const img = new Image();
+    img.src = thumbnail;
+  };
+
+  const handleCardClick = (project) => {
     setSelectedProject(project);
   };
 
@@ -44,7 +52,9 @@ export function Projects() {
                 ref={(el) => (cardRefs.current[project.id] = el)}
                 type="button"
                 className={`${styles.card} ${isOdd ? styles.cardOdd : styles.cardEven}`}
-                onClick={() => handleCardClick(project, project.id)}
+                onClick={() => handleCardClick(project)}
+                onPointerEnter={() => preloadThumbnail(project.thumbnail)}
+                onFocus={() => preloadThumbnail(project.thumbnail)}
                 aria-haspopup="dialog"
               >
                 <div className={styles.cardHeader}>

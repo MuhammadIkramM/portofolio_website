@@ -36,5 +36,5 @@ export const HERO = {
 };
 
 export const MARQUEE_DATA = {
-  items: ['Ikram', 'Software Developer', 'Cybersecurity', 'Muhammad Ikram Muslimin'],
+  items: ['Software Developer', 'Muhammad Ikram Muslimin', 'Cybersecurity'],
 };
