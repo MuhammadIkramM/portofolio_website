@@ -185,7 +185,7 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
         </div>
 
         <a
-          href="/cv/Muhammad-Ikram-Muslimin-CV.pdf"
+          href="/cv/cv_muhammad_ikram_muslimin.pdf"
           download
           className={styles.cvButton}
           aria-label="Download CV"
