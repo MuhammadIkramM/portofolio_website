@@ -59,6 +59,7 @@ export function TechStack() {
   return (
     <section id="tech-stack" ref={sectionRef} className={styles.techStack}>
       <SectionHeader
+        className={styles.sectionHeader}
         kicker={<><span>04</span> TECH STACK</>}
         title="Tech"
         accent="Stack"

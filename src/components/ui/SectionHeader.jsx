@@ -1,9 +1,9 @@
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './SectionHeader.module.css';
 
-export function SectionHeader({ kicker, title, accent, subtitle }) {
+export function SectionHeader({ kicker, title, accent, subtitle, className }) {
   return (
-    <div className={styles.head}>
+    <div className={`${styles.head}${className ? ` ${className}` : ''}`}>
       <div>
         <div className="section-kicker">
           {kicker}

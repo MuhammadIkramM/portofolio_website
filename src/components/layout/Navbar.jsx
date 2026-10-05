@@ -2,7 +2,6 @@ import { useRef, useState, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from '@/lib/gsap';
 import { NAV_ITEMS } from '@/data/nav';
-import { PROFILE } from '@/data/profile';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
 import { MobileMenu } from './MobileMenu';
 import styles from './Navbar.module.css';
@@ -63,8 +62,9 @@ export function Navbar() {
           className={styles.brand}
           href="#top"
           onClick={(e) => handleClick(e, '#top')}
+          aria-label="Ikrams, back to top"
         >
-          {PROFILE.name}<span className={styles.brandZ}>Z.</span>
+          Ikrams.
         </a>
 
         {/* Desktop links (>= 900px) */}

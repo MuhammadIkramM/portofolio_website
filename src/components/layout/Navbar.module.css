@@ -44,12 +44,6 @@
   align-items: center;
 }
 
-.brandZ {
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 18px;
-}
-
 .links {
   display: flex;
   gap: 28px;

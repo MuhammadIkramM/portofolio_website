@@ -93,7 +93,7 @@ export function Hero() {
           </div>
 
           <div data-hero-text className={`${styles.bottomCol} ${styles.bottomRight} ${styles.textBlock}`}>
-            <div className={styles.dripsWrapper}>
+            <div className={styles.dripDateGroup}>
               <div className={styles.dripsRotator}>
                 {DRIP_HEIGHTS.map((height, i) => (
                   <div
@@ -106,8 +106,6 @@ export function Hero() {
                   />
                 ))}
               </div>
-            </div>
-            <div className={styles.dateContainer}>
               <LiveDate className={styles.heroDate} />
             </div>
           </div>

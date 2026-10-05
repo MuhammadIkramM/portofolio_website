@@ -4,12 +4,14 @@
   color: var(--text);
   position: relative;
 }
-
-
+.sectionHeader {
+  margin-bottom: 0;
+}
 
 .categoriesList {
   display: flex;
   flex-direction: column;
+  margin-top: 32px;
 }
 
 .categoryBlock {
@@ -18,6 +20,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.categoryBlock:first-child {
+  border-top: none;
+  padding-top: 0;
 }
 
 .categoryLabel {
@@ -113,6 +120,12 @@
   }
 }
 
+/* <= 767px: tighter gap */
+@media (max-width: 767px) {
+  .categoriesList {
+    margin-top: 24px;
+  }
+}
 
 
 /* <= 639px: 2-col, smaller cards */
