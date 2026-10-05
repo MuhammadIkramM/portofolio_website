@@ -1,11 +1,8 @@
 export const PROFILE = {
-  name: 'Ikram',
   firstName: 'Muhammad',
   lastName: 'Muslimin',
   fullName: 'Muhammad Ikram Muslimin',
   city: null,
-  signatureImage: null,
-
   greeting: 'Hello, I am',
   nameLabel: 'Ikram',
   bio: 'Software developer and cybersecurity practitioner. I build clean, fast web applications with security designed in from the start, not patched on at the end.',
@@ -17,9 +14,6 @@ export const PROFILE = {
     { label: 'GPA', value: '3.78 / 4.00' },
     { label: 'FOCUS', value: 'Software Developer | Cybersecurity' },
   ],
-  intro: {
-    label: 'INTRODUCTION',
-  },
 };
 
 export const HERO = {

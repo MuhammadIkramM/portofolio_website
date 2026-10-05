@@ -14,13 +14,11 @@
   --dark: #0A0A0A;
   --dark-raised: #111214;
   --dark-soft: #1E1E1E;
-  --canvas: #050505;
 
   /* Text on dark background */
   --text:   #F5F5F5;
   --text-2: rgba(255,255,255,.70);
   --text-3: rgba(255,255,255,.60);
-  --text-4: rgba(255,255,255,.40);
   --line:   rgba(255,255,255,.25);
 
   /* Inverse elements (light on dark): marquee band, wipe columns, social hover fill */
@@ -29,23 +27,13 @@
 
   /* Accent for DARK backgrounds */
   --eng:   #00D4FF;
-  --eng-2: #00CEC9;
   --sec:   #FB3640;
   --sec-bright: #FF6B73;
 
   /* Accent for LIGHT backgrounds (--paper).
-     *-on-light and *-ink-light tokens are ONLY used on --paper elements. */
+     *-on-light tokens are ONLY used on --paper elements. */
   --eng-on-light: #0984E3;
   --sec-on-light: #D7263D;
-  --eng-ink-light: #102552;
-  --sec-ink-light: #8B1221;
-
-  /* Glow ambient legacy fallback */
-  --glow-eng: #0984E3;
-  --glow-sec: #8B1221;
-
-  /* Lines legacy alias */
-  --line-dark: rgba(255, 255, 255, 0.25);
 
   /* Typography stacks */
   --serif: 'Bodoni Moda', 'Georgia', serif;
@@ -54,15 +42,8 @@
   --font-sans: var(--sans);
   --font-body: 'Inter', 'Arial', sans-serif;
 
-  /* Compatibility aliases */
-  --on-dark: var(--text);
-  --on-dark-2: var(--text-2);
-  --on-dark-3: var(--text-3);
-  --on-dark-4: var(--text-4);
-
   /* Layout */
   --nav-h: 56px;
-  --nav-height: 56px;
   --gutter: clamp(20px, 6vw, 115px);
   --frame-inset: 20px;
   --hero-inset-x: clamp(16px, 5vw, 4%);

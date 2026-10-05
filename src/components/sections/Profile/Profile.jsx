@@ -85,6 +85,3 @@ export function Profile() {
     </section>
   );
 }
-
-// Re-export as About for backward compatibility if needed
-export { Profile as About };
