@@ -3,8 +3,8 @@ import styles from './Preloader.module.css';
 
 export function Preloader() {
   return createPortal(
-    <>
-      {/* Layer 2: Preloader Dark (z-index 10) */}
+    <div data-preloader-overlay className={styles.preloaderOverlay}>
+      {/* Layer 2: Preloader Dark */}
       <div data-preloader-dark className={styles.preloaderDark}>
         <div data-preloader-inner className={styles.inner}>
           <div data-preloader-signature className={styles.titleWrap}>
@@ -22,7 +22,7 @@ export function Preloader() {
         </div>
       </div>
 
-      {/* Layer 3: 5 Column Wipe (z-index 20) */}
+      {/* Layer 3: 5 Column Wipe */}
       <div data-wipe-container className={styles.wipe}>
         {[0, 1, 2, 3, 4].map((i) => (
           <div
@@ -33,7 +33,7 @@ export function Preloader() {
           />
         ))}
       </div>
-    </>,
+    </div>,
     document.body
   );
 }

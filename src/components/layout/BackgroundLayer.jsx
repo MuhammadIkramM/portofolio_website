@@ -44,9 +44,9 @@ export function BackgroundLayer() {
       );
     };
 
-    // Check if intro is skipped via url param or reduced motion
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('skip') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Check if intro is skipped via reduced motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
       reveal(true);
       return;
     }

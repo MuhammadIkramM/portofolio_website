@@ -1,14 +1,15 @@
 import { gsap } from '@/lib/gsap';
+import { ScrollTrigger } from '@/lib/gsap';
 
 /**
- * Reveal all Hero elements immediately (used for ?skip query).
+ * Reveal all Hero elements immediately (used for prefers-reduced-motion).
  */
 export function revealHeroImmediately(heroRefs) {
   window.dispatchEvent(new CustomEvent('intro:reveal', { detail: { immediate: true } }));
   if (!heroRefs) return;
 
   if (heroRefs.photo) {
-    gsap.set(heroRefs.photo, { opacity: 1, scale: 1 });
+    gsap.set(heroRefs.photo, { opacity: 1, scale: 1, xPercent: -50 });
   }
   if (heroRefs.nameChars && heroRefs.nameChars.length > 0) {
     gsap.set(heroRefs.nameChars, { y: 0, yPercent: 0 });
@@ -111,8 +112,8 @@ function createWipeSubTimeline(wipe) {
   const tl = gsap.timeline();
 
   if (wipe.cols && wipe.cols.length > 0) {
-    // Tahap 1: 5 kolom naik dari bawah (yPercent 100 -> 0) menutup layar
-    // Stagger 0.07s left to right, durasi 0.5s, power3.inOut
+    // Stage 1: 5 columns rise from below (yPercent 100 -> 0) covering the screen
+    if (import.meta.env.DEV) console.info('[intro] wipe 1');
     tl.fromTo(
       wipe.cols,
       { y: 0, yPercent: 100 },
@@ -126,9 +127,8 @@ function createWipeSubTimeline(wipe) {
       0
     );
 
-    // Tahap 2 (baru): Kolom keluar ke atas (yPercent 0 -> -100) membuka hero gelap
-    // Stagger 0.07s left to right, durasi 0.5s, power3.inOut
-    // Mulai saat kolom terakhir menutup layar (0.8s)
+    // Stage 2: columns exit upward (yPercent 0 -> -100) revealing the dark hero
+    // Starts when the last column has fully covered (0.8s)
     tl.to(
       wipe.cols,
       {
@@ -137,6 +137,9 @@ function createWipeSubTimeline(wipe) {
         duration: 0.5,
         stagger: 0.07,
         ease: 'power3.inOut',
+        onStart: () => {
+          if (import.meta.env.DEV) console.info('[intro] wipe 2');
+        },
       },
       0.8
     );
@@ -155,8 +158,8 @@ function createHeroIntroSubTimeline(hero) {
   if (hero.photo) {
     tl.fromTo(
       hero.photo,
-      { opacity: 0, scale: 1.04 },
-      { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' },
+      { opacity: 0, scale: 1.04, xPercent: -50 },
+      { opacity: 1, scale: 1, xPercent: -50, duration: 0.5, ease: 'power2.out' },
       0
     );
   }
@@ -261,10 +264,12 @@ export function createMasterIntroTimeline(elements, options = {}) {
 
   const masterTl = gsap.timeline({
     onComplete: () => {
-      // Re-enable Lenis scroll
-      window.__lenis?.start();
+      if (import.meta.env.DEV) console.info('[intro] complete');
 
       // Hide overlay elements
+      if (preloader?.overlay) {
+        preloader.overlay.style.display = 'none';
+      }
       if (preloader?.container) {
         preloader.container.style.display = 'none';
       }
@@ -277,15 +282,26 @@ export function createMasterIntroTimeline(elements, options = {}) {
         });
       }
 
-      // Reset z-index on hero frame to auto via clearProps so it behaves normally during scroll
+      // Reset z-index on hero frame and mark intro done
       if (hero?.frame) {
         gsap.set(hero.frame, { clearProps: 'zIndex' });
         hero.frame.style.zIndex = 'auto';
         hero.frame.classList.add('intro-complete');
+        if (import.meta.env.DEV) console.info('[intro] hero done');
       }
 
       // Keep body background transparent
       document.body.style.backgroundColor = 'transparent';
+
+      // Remove is-loading — unlocks scroll and allows navbar transition
+      document.documentElement.classList.remove('is-loading');
+
+      // Re-enable Lenis scroll
+      window.__lenis?.start();
+
+      // Trigger layout refresh now that overlays and is-loading are gone
+      window.__lenis?.resize?.();
+      ScrollTrigger.refresh();
 
       if (options.onComplete) {
         options.onComplete();
@@ -300,19 +316,24 @@ export function createMasterIntroTimeline(elements, options = {}) {
   const heroIntroTl = createHeroIntroSubTimeline(hero);
 
   // Calibrated labels:
-  // Video time = Master Timeline time + 0.4s
   masterTl.addLabel('preloader-start', 0.1);
   masterTl.add(preloaderTl, 'preloader-start');
 
-  // Block wipe starts at 2.37s (video 2.77s)
+  // When wipe stage 1 reaches 100% cover (t=3.15s), hide preloaderDark behind the solid wipe columns
+  if (preloader?.container) {
+    masterTl.set(preloader.container, { display: 'none' }, 3.15);
+  }
+
+  // Block wipe starts at 2.37s
   masterTl.addLabel('wipe-start', 2.37);
   masterTl.add(wipeTl, 'wipe-start');
 
-  // Hero intro starts at 3.27s (approx 0.1s after wipe phase 2 starts at 3.17s)
+  // Dispatch intro:reveal at 3.17s (start of wipe stage 2) — triggers BackgroundLayer gradient (2.6s)
   masterTl.add(() => {
     window.dispatchEvent(new CustomEvent('intro:reveal'));
   }, 3.17);
 
+  // Hero intro starts at 3.27s (0.1s after wipe stage 2 starts)
   masterTl.addLabel('hero-start', 3.27);
   masterTl.add(heroIntroTl, 'hero-start');
 
@@ -329,15 +350,28 @@ export function createMasterIntroTimeline(elements, options = {}) {
 export function initMasterIntro(elements, options = {}) {
   const params = new URLSearchParams(window.location.search);
   const isSlow = params.has('slow');
-  const isSkip = params.has('skip');
+
+  // Skip ONLY for prefers-reduced-motion (all other skip conditions removed per spec)
+  const isSkip = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (import.meta.env.DEV) {
+    if (isSkip) {
+      console.info('[intro] skip:', 'prefers-reduced-motion');
+    } else {
+      console.info('[intro] start');
+    }
+  }
 
   // Lock scroll during intro
   window.__lenis?.stop();
 
-  // Skip option
+  // Skip path — reduced motion only
   if (isSkip) {
     window.dispatchEvent(new CustomEvent('intro:reveal', { detail: { immediate: true } }));
     revealHeroImmediately(elements.hero);
+    if (elements.preloader?.overlay) {
+      elements.preloader.overlay.style.display = 'none';
+    }
     if (elements.preloader?.container) {
       elements.preloader.container.style.display = 'none';
     }
@@ -354,7 +388,10 @@ export function initMasterIntro(elements, options = {}) {
       elements.hero.frame.style.zIndex = 'auto';
     }
     document.body.style.backgroundColor = 'transparent';
+    document.documentElement.classList.remove('is-loading');
     window.__lenis?.start();
+    window.__lenis?.resize?.();
+    ScrollTrigger.refresh();
     if (options.onComplete) {
       options.onComplete();
     }
@@ -371,6 +408,9 @@ export function initMasterIntro(elements, options = {}) {
   }
   if (elements.wipe?.cols && elements.wipe.cols.length > 0) {
     gsap.set(elements.wipe.cols, { y: 0, yPercent: 100 });
+  }
+  if (elements.hero?.photo) {
+    gsap.set(elements.hero.photo, { opacity: 0, scale: 1.04, xPercent: -50 });
   }
   if (elements.hero?.nameChars && elements.hero.nameChars.length > 0) {
     gsap.set(elements.hero.nameChars, { y: 0, yPercent: 110 });

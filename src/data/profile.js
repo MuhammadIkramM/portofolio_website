@@ -29,6 +29,8 @@ export const HERO = {
   },
 };
 
+export const CV_URL = '/assets/cv/cv_muhammad_ikram_muslimin.pdf';
+
 export const MARQUEE_DATA = {
   items: ['Software Developer', 'Muhammad Ikram Muslimin', 'Cybersecurity'],
 };

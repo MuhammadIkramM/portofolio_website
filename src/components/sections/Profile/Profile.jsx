@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
-import { PROFILE } from '@/data/profile';
+import { PROFILE, CV_URL } from '@/data/profile';
 import { DownloadIcon } from '@/components/ui/icons/DownloadIcon';
 import { Reveal } from '@/components/ui/Reveal';
 import styles from './Profile.module.css';
@@ -71,8 +71,8 @@ export function Profile() {
 
           <Reveal>
             <a
-              href="/cv/cv_muhammad_ikram_muslimin.pdf"
-              download
+              href={CV_URL}
+              download="Muhammad_Ikram_Muslimin_CV.pdf"
               className={styles.cvButton}
               aria-label="Download CV"
             >

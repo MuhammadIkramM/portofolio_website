@@ -24,6 +24,7 @@ export default function App() {
     document.body.style.overflow = 'hidden';
 
     // Collect DOM elements for master intro
+    const preloaderOverlay = document.querySelector('[data-preloader-overlay]');
     const preloaderDark = document.querySelector('[data-preloader-dark]');
     const preloaderInner = document.querySelector('[data-preloader-inner]');
     const preloaderSignature = document.querySelector('[data-preloader-signature]');
@@ -46,6 +47,7 @@ export default function App() {
 
     const elements = {
       preloader: {
+        overlay: preloaderOverlay,
         container: preloaderDark,
         inner: preloaderInner,
         signature: preloaderSignature,

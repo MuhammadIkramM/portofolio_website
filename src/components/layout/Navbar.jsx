@@ -55,6 +55,7 @@ export function Navbar() {
     <>
       <header
         ref={navRef}
+        data-navbar
         className={`${styles.nav} ${visible ? styles.visible : ''}`}
         role="navigation"
       >

@@ -12,7 +12,8 @@
   color: var(--text);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
@@ -33,6 +34,9 @@
 
 .visible {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 .brand {

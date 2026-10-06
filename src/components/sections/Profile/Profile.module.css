@@ -72,8 +72,9 @@
 
 .facts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 0;
 }
 
 .fact {
@@ -82,6 +83,7 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
+  min-width: 0;
 }
 
 .fact small {
@@ -94,6 +96,7 @@
 .fact b {
   font: 500 clamp(14px, 1.4vw, 17px) / 1.2 var(--font-body);
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 .cvButton {
@@ -133,6 +136,13 @@
   .grid {
     grid-template-columns: 40% 1fr;
     gap: clamp(32px, 5vw, 64px);
+  }
+}
+
+/* Bug 7: <= 900px — NAME fact spans full row to avoid crunch */
+@media (max-width: 900px) {
+  .fact:first-child {
+    grid-column: 1 / -1;
   }
 }
 

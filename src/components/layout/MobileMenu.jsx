@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { gsap } from '@/lib/gsap';
 import { NAV_ITEMS } from '@/data/nav';
 import { SOCIALS } from '@/data/socials';
+import { CV_URL } from '@/data/profile';
 import { SocialIconLink } from '@/components/ui/SocialIconLink';
 import { DownloadIcon } from '@/components/ui/icons/DownloadIcon';
 import styles from './MobileMenu.module.css';
@@ -11,77 +12,71 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
   const linkRefs = useRef([]);
   const firstLinkRef = useRef(null);
   const prevFocusRef = useRef(null);
+  const isMountedRef = useRef(false);
 
-  const animateOpen = useCallback(() => {
+  // Bug 6: drive open/close with two explicit animations; no reverse().
+  useEffect(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReduced) {
-      gsap.set(overlay, { opacity: 1 });
-      linkRefs.current.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
-      return;
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      if (!isOpen) return;
     }
 
-    gsap.to(overlay, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-    linkRefs.current.forEach((el, i) => {
-      if (!el) return;
-      gsap.fromTo(el,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.35, delay: i * 0.06, ease: 'power2.out' }
-      );
-    });
-  }, []);
-
-  const animateClose = useCallback((cb) => {
-    const overlay = overlayRef.current;
-    if (!overlay) { cb?.(); return; }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReduced) {
-      gsap.set(overlay, { opacity: 0 });
-      cb?.();
-      return;
-    }
+    gsap.killTweensOf(overlay);
 
-    gsap.to(overlay, {
-      opacity: 0,
-      duration: 0.25,
-      ease: 'power2.in',
-      onComplete: cb,
-    });
-  }, []);
-
-  useEffect(() => {
     if (isOpen) {
       prevFocusRef.current = document.activeElement;
-      animateOpen();
 
       window.__lenis?.stop();
       document.body.style.overflow = 'hidden';
-
       const mainEl = document.querySelector('main');
       if (mainEl) {
         mainEl.setAttribute('aria-hidden', 'true');
         mainEl.setAttribute('inert', '');
       }
 
-      requestAnimationFrame(() => {
-        firstLinkRef.current?.focus();
-      });
+      if (prefersReduced) {
+        gsap.set(overlay, { autoAlpha: 1 });
+        linkRefs.current.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
+      } else {
+        gsap.to(overlay, { autoAlpha: 1, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+        linkRefs.current.forEach((el, i) => {
+          if (!el) return;
+          gsap.fromTo(el,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.35, delay: i * 0.06, ease: 'power2.out', overwrite: 'auto' }
+          );
+        });
+      }
+
+      requestAnimationFrame(() => { firstLinkRef.current?.focus(); });
     } else {
       document.body.style.overflow = '';
       window.__lenis?.start();
-
       const mainEl = document.querySelector('main');
       if (mainEl) {
         mainEl.removeAttribute('aria-hidden');
         mainEl.removeAttribute('inert');
       }
-
       prevFocusRef.current?.focus?.();
+
+      if (prefersReduced) {
+        gsap.set(overlay, { autoAlpha: 0, clearProps: 'opacity,visibility' });
+      } else {
+        gsap.to(overlay, {
+          autoAlpha: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          overwrite: 'auto',
+          onComplete: () => gsap.set(overlay, { clearProps: 'opacity,visibility' }),
+        });
+      }
     }
-  }, [isOpen, animateOpen]);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -128,24 +123,20 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
     };
   }, [isOpen, onClose]);
 
-  const handleLinkClick = (e, href) => {
+  const handleLinkClick = useCallback((e, href) => {
     e.preventDefault();
-
-    animateClose(() => {
-      onClose();
-
-      requestAnimationFrame(() => {
-        const target = document.querySelector(href);
-        if (target) {
-          if (window.__lenis) {
-            window.__lenis.scrollTo(target, { duration: 1.1 });
-          } else {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
+    onClose();
+    requestAnimationFrame(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        if (window.__lenis) {
+          window.__lenis.scrollTo(target, { duration: 1.1 });
+        } else {
+          target.scrollIntoView({ behavior: 'smooth' });
         }
-      });
+      }
     });
-  };
+  }, [onClose]);
 
   return (
     <div
@@ -185,8 +176,8 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
         </div>
 
         <a
-          href="/cv/cv_muhammad_ikram_muslimin.pdf"
-          download
+          href={CV_URL}
+          download="Muhammad_Ikram_Muslimin_CV.pdf"
           className={styles.cvButton}
           aria-label="Download CV"
         >

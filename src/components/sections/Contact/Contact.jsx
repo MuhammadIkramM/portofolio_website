@@ -87,8 +87,8 @@ export function Contact() {
       <div className={styles.meta}>
         <span className={styles.credit}>{FOOTER.credit}</span>
         <LiveDate className={styles.metaDate} />
-        <button className={styles.backTop} onClick={scrollToTop} aria-label={FOOTER.backToTop}>
-          {FOOTER.backToTop}
+        <button className={styles.backTop} onClick={scrollToTop} aria-label="Back to top">
+          <span className={styles.backTopLabel}>{FOOTER.backToTop}</span>
           <ArrowButton direction="up" className={styles.backTopBtn} />
         </button>
       </div>

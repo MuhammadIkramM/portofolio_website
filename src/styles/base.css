@@ -97,3 +97,18 @@ button {
 ul, ol {
   list-style: none;
 }
+
+/* During intro: lock scroll and keep navbar invisible.
+   No !important — the navbar's own CSS starts at opacity:0
+   and GSAP takes over the fade-in at the end of the sequence. */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+html.is-loading [data-navbar] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
