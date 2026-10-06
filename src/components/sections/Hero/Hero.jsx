@@ -9,6 +9,12 @@ import styles from './Hero.module.css';
 
 const DRIP_HEIGHTS = [38, 22, 45, 26, 52, 30, 40];
 
+function getDripModifier(height) {
+  if (height === 52) return styles.dripEng;
+  if (height === 45) return styles.dripSec;
+  return '';
+}
+
 export function Hero() {
   const sectionRef = useRef(null);
   const photoRef = useRef(null);
@@ -45,7 +51,7 @@ export function Hero() {
           {/* Small row above title: "Muhammad" */}
           <div className={styles.topLabelRow}>
             {HERO.topLabel.split('').map((char, i) => (
-              <span key={i} data-hero-top-char className={styles.topChar}>
+              <span key={`top-${char}-${i}`} data-hero-top-char className={styles.topChar}>
                 <span>{char}</span>
               </span>
             ))}
@@ -54,7 +60,7 @@ export function Hero() {
           {/* Large title: IKRAM */}
           <div className={styles.nameRow}>
             {HERO.nameChars.map((char, i) => (
-              <span key={i} data-hero-name-char className={`${styles.nameChar} hero__name-char`}>
+              <span key={`char-${char}-${i}`} data-hero-name-char className={`${styles.nameChar} hero__name-char`}>
                 <span>{char}</span>
               </span>
             ))}
@@ -77,7 +83,7 @@ export function Hero() {
           className={styles.photo}
           src={HERO.photo}
           alt={PROFILE.fullName}
-          fetchpriority="high"
+          fetchPriority="high"
         />
 
         {/* Bottom-left: Software Developer & Bottom-right: Drips + LiveDate */}
@@ -94,9 +100,7 @@ export function Hero() {
                   <div
                     key={i}
                     data-hero-drip
-                    className={`${styles.drip} ${
-                      height === 52 ? styles.dripEng : height === 45 ? styles.dripSec : ''
-                    }`}
+                    className={`${styles.drip} ${getDripModifier(height)}`}
                     style={{ height: `${height}px` }}
                   />
                 ))}

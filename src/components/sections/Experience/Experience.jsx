@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { EXPERIENCE_ITEMS } from '@/data/experience';
-import { Reveal } from '@/components/ui/Reveal';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { BriefcaseIcon } from '@/components/ui/icons/BriefcaseIcon';
 import { CalendarIcon } from '@/components/ui/icons/CalendarIcon';
@@ -89,7 +88,7 @@ export function Experience() {
                     <BriefcaseIcon size={20} color={accentColor} />
                   </div>
 
-                  <article className={styles.card} tabIndex="0">
+                  <article className={styles.card}>
                     <header className={styles.cardHeader}>
                       <div className={styles.roleGroup}>
                         <h3 className={styles.role}>{item.role}</h3>
@@ -113,8 +112,8 @@ export function Experience() {
 
                     {item.highlights && item.highlights.length > 0 && (
                       <ul className={styles.highlights}>
-                        {item.highlights.map((h, idx) => (
-                          <li key={idx} className={styles.highlightItem}>
+                        {item.highlights.map((h) => (
+                          <li key={h} className={styles.highlightItem}>
                             <CheckCircleIcon size={15} color={accentColor} className={styles.checkIcon} />
                             <span>{h}</span>
                           </li>

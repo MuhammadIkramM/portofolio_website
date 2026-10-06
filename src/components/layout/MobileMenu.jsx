@@ -7,6 +7,24 @@ import { SocialIconLink } from '@/components/ui/SocialIconLink';
 import { DownloadIcon } from '@/components/ui/icons/DownloadIcon';
 import styles from './MobileMenu.module.css';
 
+function trapFocusTab(e, panel) {
+  if (!panel) return;
+  const focusables = panel.querySelectorAll(
+    'a[href], button, [tabindex]:not([tabindex="-1"])'
+  );
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 export function MobileMenu({ isOpen, onClose, activeSection }) {
   const overlayRef = useRef(null);
   const linkRefs = useRef([]);
@@ -89,22 +107,7 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
       }
 
       if (e.key === 'Tab') {
-        const panel = overlayRef.current;
-        if (!panel) return;
-        const focusables = panel.querySelectorAll(
-          'a[href], button, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusables.length === 0) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        trapFocusTab(e, overlayRef.current);
       }
     };
 
@@ -139,13 +142,14 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
   }, [onClose]);
 
   return (
-    <div
+    <dialog
+      open
       ref={overlayRef}
       id="mobile-menu"
       className={`${styles.overlay} ${isOpen ? styles.open : ''}`}
-      role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
+      data-lenis-prevent
     >
       <nav className={styles.linksList}>
         {NAV_ITEMS.map((item, i) => {
@@ -185,6 +189,6 @@ export function MobileMenu({ isOpen, onClose, activeSection }) {
           <span>Download CV</span>
         </a>
       </div>
-    </div>
+    </dialog>
   );
 }

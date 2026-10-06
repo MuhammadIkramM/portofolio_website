@@ -10,10 +10,27 @@ import styles from './ProjectModal.module.css';
 export function ProjectModal({ project, onClose }) {
   const backdropRef = useRef(null);
   const panelRef = useRef(null);
-  const closeBtnRef = useRef(null);
+  const bannerRef = useRef(null);
+  const bodyRef = useRef(null);
   const prevFocusedRef = useRef(null);
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+
+  const handleClose = () => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced && panelRef.current && backdropRef.current) {
+      gsap.to(backdropRef.current, { opacity: 0, duration: 0.2, ease: 'power2.in' });
+      gsap.to(panelRef.current, {
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.2,
+        ease: 'power2.in',
+        onComplete: onClose,
+      });
+    } else {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     prevFocusedRef.current = document.activeElement;
@@ -23,8 +40,8 @@ export function ProjectModal({ project, onClose }) {
     document.body.style.overflow = 'hidden';
     window.__lenis?.stop();
 
-    // Focus close button initially
-    closeBtnRef.current?.focus();
+    // Focus body on open (tabindex="-1")
+    bodyRef.current?.focus();
 
     // GSAP open animation
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -41,7 +58,18 @@ export function ProjectModal({ project, onClose }) {
       );
     }
 
-    // Keyboard handlers: ESC and Focus trap
+    // Wheel over banner scrolls body: native passive wheel listener
+    const bannerEl = bannerRef.current;
+    const handleBannerWheel = (e) => {
+      if (bodyRef.current) {
+        bodyRef.current.scrollTop += e.deltaY;
+      }
+    };
+    if (bannerEl) {
+      bannerEl.addEventListener('wheel', handleBannerWheel, { passive: true });
+    }
+
+    // Keyboard handlers: ESC and Focus trap in document keydown listener inside open effect
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -67,55 +95,41 @@ export function ProjectModal({ project, onClose }) {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      if (bannerEl) {
+        bannerEl.removeEventListener('wheel', handleBannerWheel);
+      }
+      document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = prevOverflow;
       window.__lenis?.start();
       prevFocusedRef.current?.focus?.();
     };
   }, []);
 
-  const handleClose = () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!prefersReduced && panelRef.current && backdropRef.current) {
-      gsap.to(backdropRef.current, { opacity: 0, duration: 0.2, ease: 'power2.in' });
-      gsap.to(panelRef.current, {
-        opacity: 0,
-        scale: 0.96,
-        duration: 0.2,
-        ease: 'power2.in',
-        onComplete: onClose,
-      });
-    } else {
-      onClose();
-    }
-  };
-
-  const handleBackdropClick = (e) => {
-    if (e.target === backdropRef.current) {
-      handleClose();
-    }
-  };
-
-  const accentColor = project.accent === 'sec' ? 'var(--sec-bright)' : 'var(--eng)';
+  const accentColor = project.accent === 'sec' ? 'var(--sec-bright)' : 'var(--eng';
   const accentClass = project.accent === 'sec' ? styles.panelSec : styles.panelEng;
 
   const hasLinks = project.links?.live || project.links?.repo || project.links?.github || project.links?.linkedin;
 
   return createPortal(
-    <div
-      ref={backdropRef}
-      className={styles.backdrop}
-      onClick={handleBackdropClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-project-title"
-    >
-      <div ref={panelRef} className={`${styles.panel} ${accentClass}`}>
+    <>
+      <div
+        ref={backdropRef}
+        className={styles.backdrop}
+        aria-hidden="true"
+        onClick={handleClose}
+      />
+      <dialog
+        open
+        ref={panelRef}
+        className={`${styles.panel} ${accentClass}`}
+        aria-modal="true"
+        aria-labelledby="modal-project-title"
+      >
         {/* Top: Thumbnail banner with 44px circular close button */}
-        <div className={styles.banner}>
+        <div ref={bannerRef} className={styles.banner}>
           <div className={styles.bannerFallback}>
             <span className={styles.fallbackTitle}>{project.title}</span>
           </div>
@@ -133,7 +147,6 @@ export function ProjectModal({ project, onClose }) {
           )}
 
           <button
-            ref={closeBtnRef}
             type="button"
             className={styles.closeBtn}
             onClick={handleClose}
@@ -157,7 +170,12 @@ export function ProjectModal({ project, onClose }) {
         </div>
 
         {/* Content in exact required order: tag chips, title, subtitle, description, highlights, link buttons */}
-        <div className={styles.body}>
+        <div
+          ref={bodyRef}
+          className={styles.body}
+          data-lenis-prevent
+          tabIndex={-1}
+        >
           {/* 1. Tag chips (stack items as pills; accent border and text, transparent bg) */}
           {project.stack && project.stack.length > 0 && (
             <div className={styles.chipsRow}>
@@ -185,8 +203,8 @@ export function ProjectModal({ project, onClose }) {
             <div className={styles.highlightsWrap}>
               <h4 className={styles.highlightsHeader}>Key Highlights</h4>
               <ul className={styles.highlightsList}>
-                {project.highlights.map((h, i) => (
-                  <li key={i} className={styles.highlightItem}>
+                {project.highlights.map((h) => (
+                  <li key={h} className={styles.highlightItem}>
                     <CheckCircleIcon size={16} color={accentColor} className={styles.checkIcon} />
                     <span>{h}</span>
                   </li>
@@ -234,8 +252,8 @@ export function ProjectModal({ project, onClose }) {
             </div>
           )}
         </div>
-      </div>
-    </div>,
+      </dialog>
+    </>,
     document.body
   );
 }

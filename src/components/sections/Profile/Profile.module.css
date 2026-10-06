@@ -72,8 +72,8 @@
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 32px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  column-gap: 24px;
   row-gap: 0;
 }
 
@@ -96,7 +96,8 @@
 .fact b {
   font: 500 clamp(14px, 1.4vw, 17px) / 1.2 var(--font-body);
   color: var(--text);
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  text-wrap: balance;
 }
 
 .cvButton {
@@ -139,12 +140,6 @@
   }
 }
 
-/* Bug 7: <= 900px — NAME fact spans full row to avoid crunch */
-@media (max-width: 900px) {
-  .fact:first-child {
-    grid-column: 1 / -1;
-  }
-}
 
 /* <= 767px: single column, photo first */
 @media (max-width: 767px) {

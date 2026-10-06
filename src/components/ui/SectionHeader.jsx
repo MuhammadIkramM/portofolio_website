@@ -3,7 +3,7 @@ import styles from './SectionHeader.module.css';
 
 export function SectionHeader({ kicker, title, accent, subtitle, className }) {
   return (
-    <div className={`${styles.head}${className ? ` ${className}` : ''}`}>
+    <div className={className ? `${styles.head} ${className}` : styles.head}>
       <div>
         <div className="section-kicker">
           {kicker}

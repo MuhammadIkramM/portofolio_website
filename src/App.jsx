@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { gsap } from '@/lib/gsap';
-import { ScrollTrigger } from '@/lib/gsap';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { useLenis } from '@/hooks/useLenis';
 import { Navbar } from '@/components/layout/Navbar';
 import { Preloader } from '@/components/layout/Preloader';

@@ -57,30 +57,31 @@ export function Navbar() {
         ref={navRef}
         data-navbar
         className={`${styles.nav} ${visible ? styles.visible : ''}`}
-        role="navigation"
       >
-        <a
-          className={styles.brand}
-          href="#top"
-          onClick={(e) => handleClick(e, '#top')}
-          aria-label="Ikrams, back to top"
-        >
-          Ikrams.
-        </a>
+        <nav aria-label="Primary" className={styles.navGroup}>
+          <a
+            className={styles.brand}
+            href="#top"
+            onClick={(e) => handleClick(e, '#top')}
+            aria-label="Ikrams, back to top"
+          >
+            Ikrams.
+          </a>
 
-        {/* Desktop links (>= 900px) */}
-        <nav className={styles.links}>
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`${styles.link} ${active === item.href.replace('#', '') ? styles.active : ''}`}
-              onClick={(e) => handleClick(e, item.href)}
-            >
-              <sup className={styles.num}>{item.num}</sup>
-              {item.label}
-            </a>
-          ))}
+          {/* Desktop links (>= 900px) */}
+          <div className={styles.links}>
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`${styles.link} ${active === item.href.replace('#', '') ? styles.active : ''}`}
+                onClick={(e) => handleClick(e, item.href)}
+              >
+                <sup className={styles.num}>{item.num}</sup>
+                {item.label}
+              </a>
+            ))}
+          </div>
         </nav>
 
         {/* Hamburger button (<= 899px) */}

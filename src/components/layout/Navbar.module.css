@@ -39,6 +39,13 @@
   transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 
+.navGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .brand {
   font: 500 22px / 1 var(--serif);
   text-decoration: none;

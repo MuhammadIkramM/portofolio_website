@@ -1,6 +1,4 @@
-import { SOCIALS } from './socials';
-
-export { SOCIALS };
+export { SOCIALS } from './socials.js';
 
 export const FOOTER = {
   kicker: 'CONTACT',

@@ -1,5 +1,4 @@
-import { gsap } from '@/lib/gsap';
-import { ScrollTrigger } from '@/lib/gsap';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 /**
  * Reveal all Hero elements immediately (used for prefers-reduced-motion).
@@ -48,8 +47,7 @@ function createPreloaderSubTimeline(preloader) {
   const tl = gsap.timeline();
   const counterObj = { value: 0 };
 
-  // Signature "Zandik" write-on (clip-path left-to-right)
-  const sigEl = preloader.signature || (preloader.chars && preloader.chars[0]);
+  const sigEl = preloader.signature || preloader.chars?.[0];
   if (sigEl) {
     tl.fromTo(
       sigEl,
@@ -399,7 +397,7 @@ export function initMasterIntro(elements, options = {}) {
   }
 
   // Explicitly reset initial transforms and states before timeline:
-  const sigEl = elements.preloader?.signature || (elements.preloader?.chars && elements.preloader.chars[0]);
+  const sigEl = elements.preloader?.signature || elements.preloader?.chars?.[0];
   if (sigEl) {
     gsap.set(sigEl, { clipPath: 'inset(0 100% 0 0)' });
   }
