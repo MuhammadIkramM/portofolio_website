@@ -108,13 +108,13 @@ export function ProjectModal({ project, onClose }) {
     };
   }, []);
 
-  const accentColor = project.accent === 'sec' ? 'var(--sec-bright)' : 'var(--eng';
+  const accentColor = project.accent === 'sec' ? 'var(--sec-bright)' : 'var(--eng)';
   const accentClass = project.accent === 'sec' ? styles.panelSec : styles.panelEng;
 
   const hasLinks = project.links?.live || project.links?.repo || project.links?.github || project.links?.linkedin;
 
   return createPortal(
-    <>
+    <div className={styles.overlay}>
       <div
         ref={backdropRef}
         className={styles.backdrop}
@@ -253,7 +253,7 @@ export function ProjectModal({ project, onClose }) {
           )}
         </div>
       </dialog>
-    </>,
+    </div>,
     document.body
   );
 }
