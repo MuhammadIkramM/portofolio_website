@@ -5,7 +5,7 @@ export const PROFILE = {
   city: null,
   greeting: 'Hello, I am',
   nameLabel: 'Ikram',
-  bio: 'Software developer and cybersecurity practitioner. I build clean, fast web applications with security designed in from the start, not patched on at the end.',
+  bio: 'Software developer and cybersecurity enthusiast, building applications and learning to break and defend them.',
   photo: '/assets/profile/profile.jpg',
   photoCaption: 'Ikram',
   facts: [
